@@ -1,5 +1,7 @@
 package com.hstock.model;
 
+import java.io.Serializable;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,7 +13,12 @@ import org.hibernate.annotations.Columns;
 
 @Entity
 @Table(name = "STOCK")
-public class Stock {
+public class Stock implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,11 +37,13 @@ public class Stock {
 	@Column(name = "HIGH_PRICE")
 	private double highPrice;
 	
-	
+	@Column(name = "LOW_PRICE")
 	private double lowPrice;
 	
+	@Column(name = "CLOSE_PRICE")
 	private double closePrice;
 	
+	@Column(name = "VOLUMNE")
 	private double volumne;
 	
 	
