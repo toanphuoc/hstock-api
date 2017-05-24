@@ -5,4 +5,5 @@ import com.hstock.model.Stock;
 
 public interface StockDao extends GenericDao<Stock>{
 	
+	public Stock getStockById(Long id);
 }

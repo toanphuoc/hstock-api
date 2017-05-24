@@ -8,5 +8,5 @@ public interface StockService {
 
 	public List<Stock> getAllStocks();
 	
-	public Stock getStockById(long id);
+	public Stock getStockById(Long id);
 }

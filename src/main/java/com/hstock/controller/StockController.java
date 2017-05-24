@@ -28,7 +28,6 @@ public class StockController {
 	@RequestMapping(value = "/getStockById/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
 	@ResponseBody
 	public Stock getStockById(@PathVariable("id") long id){
-		
-		return stockService.getStockById(id);
+		return stockService.getStockById(new Long(id));
 	}
 }

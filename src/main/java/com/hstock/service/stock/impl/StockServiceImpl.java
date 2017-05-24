@@ -23,8 +23,8 @@ public class StockServiceImpl implements StockService{
 
 	@Override
 	@Transactional
-	public Stock getStockById(long id) {
-		return stockDao.findById(id);
+	public Stock getStockById(Long id) {
+		return stockDao.getStockById(id);
 	}
 
 }

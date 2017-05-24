@@ -13,17 +13,12 @@ import org.hibernate.annotations.Columns;
 
 @Entity
 @Table(name = "STOCK")
-public class Stock implements Serializable{
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
+public class Stock{
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID", unique = true, nullable = false)
-	private long id;
+	private Long id;
 	
 	@Column(name = "TICKET")
 	private String ticket;
