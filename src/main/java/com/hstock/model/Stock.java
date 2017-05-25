@@ -1,15 +1,11 @@
 package com.hstock.model;
 
-import java.io.Serializable;
-
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
-
-import org.hibernate.annotations.Columns;
 
 @Entity
 @Table(name = "STOCK")
@@ -23,8 +19,8 @@ public class Stock{
 	@Column(name = "TICKET")
 	private String ticket;
 	
-	@Column(name = "DATE")
-	private String date;
+	@Column(name = "OPEN_DATE")
+	private String openDate;
 	
 	@Column(name = "OPEN_PRICE")
 	private double openPrice;
@@ -40,6 +36,70 @@ public class Stock{
 	
 	@Column(name = "VOLUMNE")
 	private double volumne;
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getTicket() {
+		return ticket;
+	}
+
+	public void setTicket(String ticket) {
+		this.ticket = ticket;
+	}
+
+	public String getOpenDate() {
+		return openDate;
+	}
+
+	public void setOpenDate(String openDate) {
+		this.openDate = openDate;
+	}
+
+	public double getOpenPrice() {
+		return openPrice;
+	}
+
+	public void setOpenPrice(double openPrice) {
+		this.openPrice = openPrice;
+	}
+
+	public double getHighPrice() {
+		return highPrice;
+	}
+
+	public void setHighPrice(double highPrice) {
+		this.highPrice = highPrice;
+	}
+
+	public double getLowPrice() {
+		return lowPrice;
+	}
+
+	public void setLowPrice(double lowPrice) {
+		this.lowPrice = lowPrice;
+	}
+
+	public double getClosePrice() {
+		return closePrice;
+	}
+
+	public void setClosePrice(double closePrice) {
+		this.closePrice = closePrice;
+	}
+
+	public double getVolumne() {
+		return volumne;
+	}
+
+	public void setVolumne(double volumne) {
+		this.volumne = volumne;
+	}
 	
 	
 }
