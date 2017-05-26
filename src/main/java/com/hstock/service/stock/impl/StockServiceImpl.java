@@ -4,6 +4,7 @@ import java.text.DecimalFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Stack;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -62,6 +63,46 @@ public class StockServiceImpl implements StockService{
 	
 	public Object SMA(String ticket, int number){
 		List<Stock> stocks = stockDao.getStockByTicket(ticket);
-		return stocks;
+		if(number > stocks.size()){
+			return null;
+		}
+		
+		double[] results = new double[stocks.size() - number + 1];
+		
+		System.out.println("Lenght of results: " + results.length);
+		
+		Stack<Double> stack = new Stack<>();
+		
+		int j = 0;
+		while (j < number) {
+			stack.push(stocks.get(j).getClosePrice());
+			j++;
+		}
+		
+		for (int i = 0; i < stocks.size() - number; i++) {
+			
+			System.out.println(stocks.get(i).getClosePrice());
+
+			results[i] = avergea(stack);
+			
+			int indexNext = i + number -1;
+			//if(indexNext <= stocks.size()){
+				stack.remove(0);
+				stack.push(stocks.get(i + number - 1).getClosePrice());
+			//}
+		}
+		return results;
+	}
+	
+	private double avergea(Stack<Double> stack){
+		double sum = 0;
+		for (Double val : stack) {
+			sum += val;
+		}
+		
+		DecimalFormat df = new DecimalFormat("#.##");
+		String value = df.format((Double)(sum / stack.size()));
+		
+		return sum / stack.size();
 	}
 }
