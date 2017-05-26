@@ -15,7 +15,6 @@ public class StockDaoImpl extends AbstractGenericDao<Stock> implements StockDao{
 	@Transactional
 	public Stock getStockById(Long id) {
 		Session session  = getSession();
-		
 		return (Stock) session.get(Stock.class, id);
 	}
 
@@ -39,7 +38,7 @@ public class StockDaoImpl extends AbstractGenericDao<Stock> implements StockDao{
 	@Transactional
 	public List<Stock> getStockByTicket(String ticket) {
 		String hql = "FROM Stock WHERE ticket = upper(:ticket) order by str_to_date(open_date, '%m/%d/%Y')";
-		return getSession().createQuery(hql).setParameter("ticket", ticket).list();
+		return getSession().createQuery(hql).setParameter("ticket", ticket).setMaxResults(100).list();
 	}
 
 }

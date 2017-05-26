@@ -10,7 +10,9 @@ public interface StockService {
 	
 	public Stock getStockById(Long id);
 	
-	public Object EMA(String ticket, String date, int number);
+	public Object EMA(String ticket, String date, int period);
 	
-	public Object SMA(String ticket, String date, int number);
+	public Object SMA(String ticket, String date, int period);
+	
+	public Object RSI(String ticket, int period);
 }
