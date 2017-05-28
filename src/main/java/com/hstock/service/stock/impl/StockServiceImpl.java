@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.hstock.dao.stock.StockDao;
-import com.hstock.indicators.Indicators;
+import com.hstock.indicators.calculator.Indicators;
 import com.hstock.model.Stock;
 import com.hstock.service.stock.StockService;
 

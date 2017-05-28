@@ -1,4 +1,4 @@
-package com.hstock.indicators;
+package com.hstock.indicators.calculator;
 
 import java.util.ArrayList;
 import java.util.HashMap;
