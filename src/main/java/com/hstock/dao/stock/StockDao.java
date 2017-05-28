@@ -8,26 +8,36 @@ import com.hstock.model.Stock;
 public interface StockDao extends GenericDao<Stock>{
 	
 	/**
-	 * Get Stock by ID
-	 * @param id
+	 * Get all stocks each Friday of ticket 'ticket'
+	 * @param ticket
+	 * @param numberOfDay
 	 * @return
 	 */
-	public Stock getStockById(Long id);
+	public List<Stock> getAllStockAtAllWeekend(String ticket, int numberOfDay);
 	
 	/**
-	 * Get Stock by ticket, open_date and limit
+	 * Get all stock each Friday + to day 'date' + limit 'period' of ticket 'ticket'
+	 * @param ticket
+	 * @param numberOfDay
+	 * @param date
+	 * @param period
+	 * @return
+	 */
+	public List<Stock> getAllStockAtAllWeekend(String ticket, int numberOfDay, String date, int period);
+	
+	/**
+	 * Get all Stock of ticket 'ticket'
+	 * @param ticket
+	 * @return
+	 */
+	public List<Stock> getAllStock(String ticket);
+	
+	/**
+	 * Get all Stock tp day 'date' + limitation 'period' of ticket 'ticket'
 	 * @param ticket
 	 * @param date
-	 * @param number
+	 * @param period
 	 * @return
 	 */
-	public List<Stock> getStockByTicketAndOpenDate(String ticket, String date, int number);
-	
-	/**
-	 * Get Stock by ticket
-	 * @param ticket
-	 * @return
-	 */
-	public List<Stock> getStockByTicket(String ticket);
-	
+	public List<Stock> getAllStock(String ticket, String date, int period);
 }

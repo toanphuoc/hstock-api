@@ -1,5 +1,6 @@
 package com.hstock.controller;
 
+import java.util.HashMap;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -18,28 +19,22 @@ public class StockController {
 	@Autowired
 	private StockService stockService;
 	
-	@RequestMapping(value = "/getAllStocks", method = RequestMethod.GET, headers = "Accept=application/json")
-	@ResponseBody
-	public List<Stock> getAllStocks(){
-		return stockService.getAllStocks();
-	}
-	
-	@RequestMapping(value = "/getStockById/{id}", method = RequestMethod.GET, headers = "Accept=application/json")
-	@ResponseBody
-	public Stock getStockById(@PathVariable("id") long id){
-		return stockService.getStockById(new Long(id));
-	}
-	
 	@RequestMapping(value = "/ema", method = RequestMethod.GET, headers = "Accept=application/json")
 	@ResponseBody
-	public Object EMA(@RequestParam("ticket") String ticket, @RequestParam(value = "date", required = false) String date, @RequestParam("period") int period){
-		return stockService.EMA(ticket, date, period);
+	public Object EMA(@RequestParam("ticket") String ticket, 
+					@RequestParam(value = "date", required = false) String date,
+					@RequestParam("period") int period,
+					@RequestParam(value = "type", required = false, defaultValue= "daily") String type){
+		return stockService.EMA(ticket, date, period, type);
 	}
 	
 	@RequestMapping(value = "/sma", method = RequestMethod.GET, headers = "Accept=application/json")
 	@ResponseBody
-	public Object SMA(@RequestParam("ticket") String ticket, @RequestParam(value = "date", required = false) String date,@RequestParam("period") int period){
-		return stockService.SMA(ticket, date, period);
+	public Object SMA(@RequestParam(value = "ticket") String ticket, 
+					@RequestParam(value = "date", required = false) String date,
+					@RequestParam(value = "period") int period, 
+					@RequestParam(value = "type", required = false, defaultValue= "daily") String type){
+		return stockService.SMA(ticket, date, period, type);
 	}
 	
 	@RequestMapping(value = "/rsi", method = RequestMethod.GET, headers = "Accept=application/json")
