@@ -8,7 +8,5 @@ public interface StockService {
 	
 	public Object EMA(String ticket, String date, int period, String type);
 	
-	public Object SMA(String ticket, String date, int period, String type);
-	
 	public Object RSI(String ticket, int period);
 }

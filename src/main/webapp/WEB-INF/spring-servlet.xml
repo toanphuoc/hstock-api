@@ -33,6 +33,8 @@
 		<beans:property name="annotatedClasses">
 			<beans:list>
 				<beans:value>com.hstock.model.Stock</beans:value>
+				<beans:value>com.hstock.model.Period</beans:value>
+				<beans:value>com.hstock.model.IndicatorSma</beans:value>
 			</beans:list>
 		</beans:property>
 		<beans:property name="hibernateProperties">
@@ -55,7 +57,13 @@
 			ref="hibernate4AnnotatedSessionFactory" />
 	</beans:bean>
 
+	<beans:bean id="periodDao" class="com.hstock.dao.period.impl.PeriodDaoImpl"></beans:bean>
+
 	<beans:bean id="stockDao" class="com.hstock.dao.stock.impl.StockDaoImpl"></beans:bean>
 	<beans:bean id="stockService" class="com.hstock.service.stock.impl.StockServiceImpl"></beans:bean>
-
+	
+	<beans:bean id="smaDao" class="com.hstock.dao.indicator.impl.SMADaoImpl"></beans:bean>
+	<beans:bean id="smaService" class="com.hstock.service.indicator.impl.SMAServiceImpl"></beans:bean>
+	
+	
 </beans:beans>

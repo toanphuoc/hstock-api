@@ -1,16 +1,9 @@
 package com.hstock.service.stock.impl;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import com.hstock.dao.stock.StockDao;
-import com.hstock.indicators.calculator.Indicators;
-import com.hstock.model.Stock;
 import com.hstock.service.stock.StockService;
 
 @Service("stockService")
@@ -22,80 +15,45 @@ public class StockServiceImpl implements StockService{
 	@Override
 	@Transactional
 	public Object EMA(String ticket, String date, int period, String type) {
-		if(type != null && type.toUpperCase().equals(WEEKLY)){
+		/*if(type != null && type.toUpperCase().equals(WEEKLY)){
 			if(date != null){
-				/**
+				*//**
 				 * Get all stock at Friday and to day 'date' of ticket 'ticket'
-				 */
+				 *//*
 				List<Stock> stocks = stockDao.getAllStockAtAllWeekend(ticket, NUMBER_OF_FRIDAY, date, period);
 				return Indicators.SMA(stocks, WEEKLY);
 			}
 			
-			/**
+			*//**
 			 * Get all Stock at Friday of ticket 'ticket'
-			 */
+			 *//*
 			
-			List<Stock> stocks = stockDao.getAllStockAtAllWeekend(ticket, NUMBER_OF_FRIDAY);
+			List<Stock> stocks = stockDao.getAllStock(ticket, NUMBER_OF_FRIDAY);
 			return Indicators.EMA(stocks, period, WEEKLY);
 		}
 		
 		if(date != null){
 			
-			/**
+			*//**
 			 * Get all stock to day 'date'
-			 */
+			 *//*
 			List<Stock> stocks = stockDao.getAllStock(ticket, date, period);
 			return Indicators.SMA(stocks, DAILY);
 		}
 		
-		/**
+		*//**
 		 * Get all of stocks
-		 */
+		 *//*
 		List<Stock> stocks = stockDao.getAllStock(ticket);
-		return Indicators.EMA(stocks, period, DAILY);
-	}
-
-	@Override
-	@Transactional
-	public Object SMA(String ticket, String date, int period, String type) {
-		
-		if(type != null && type.toUpperCase().equals(WEEKLY)){
-			if(date != null){
-				/**
-				 * Get all stock at Friday and to day 'date' of ticket 'ticket'
-				 */
-				List<Stock> stocks = stockDao.getAllStockAtAllWeekend(ticket, NUMBER_OF_FRIDAY, date, period);
-				return Indicators.SMA(stocks, WEEKLY);
-			}
-			
-			/**
-			 * Get all Stock at Friday of ticket 'ticket'
-			 */
-			
-			List<Stock> stocks = stockDao.getAllStockAtAllWeekend(ticket, NUMBER_OF_FRIDAY);
-			return Indicators.SMA(stocks, period, type);
-		}
-		
-		if(date != null){
-			
-			/**
-			 * Get all stock to day 'date'
-			 */
-			List<Stock> stocks = stockDao.getAllStock(ticket, date, period);
-			return Indicators.SMA(stocks, DAILY);
-		}
-		
-		/**
-		 * Get all of stocks
-		 */
-		List<Stock> stocks = stockDao.getAllStock(ticket);
-		return Indicators.SMA(stocks, period, type);
+		return Indicators.EMA(stocks, period, DAILY);*/
+		return null;
 	}
 	
 	@Override
 	@Transactional
 	public Object RSI(String ticket, int period) {
-		List<Stock> stocks = stockDao.getAllStock(ticket);
+		return null;
+/*		List<Stock> stocks = stockDao.getAllStock(ticket);
 		
 		if(period > stocks.size()){
 			return null;
@@ -162,7 +120,7 @@ public class StockServiceImpl implements StockService{
         	k++;
 		}
         
-		return rsi;
+		return rsi;*/
 	}
 	
 
