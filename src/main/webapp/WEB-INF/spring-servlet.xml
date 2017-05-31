@@ -35,6 +35,8 @@
 				<beans:value>com.hstock.model.Stock</beans:value>
 				<beans:value>com.hstock.model.Period</beans:value>
 				<beans:value>com.hstock.model.IndicatorSma</beans:value>
+				<beans:value>com.hstock.model.IndicatorEma</beans:value>
+				<beans:value>com.hstock.model.IndicatorRsi</beans:value>
 			</beans:list>
 		</beans:property>
 		<beans:property name="hibernateProperties">
@@ -65,5 +67,9 @@
 	<beans:bean id="smaDao" class="com.hstock.dao.indicator.impl.SMADaoImpl"></beans:bean>
 	<beans:bean id="smaService" class="com.hstock.service.indicator.impl.SMAServiceImpl"></beans:bean>
 	
+	<beans:bean id="emaDao" class="com.hstock.dao.indicator.impl.EMADaoImpl"></beans:bean>
+	<beans:bean id="emaService" class="com.hstock.service.indicator.impl.EMAServiceImpl"></beans:bean>
 	
+	<beans:bean id="rsiDao" class="com.hstock.dao.indicator.impl.RSIDaoImpl"></beans:bean>
+	<beans:bean id="rsiService" class="com.hstock.service.indicator.impl.RSIServiceImpl"></beans:bean>
 </beans:beans>

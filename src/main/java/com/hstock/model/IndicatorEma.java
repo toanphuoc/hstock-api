@@ -14,8 +14,8 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "INDICATOR_SMA")
-public class IndicatorSma {
+@Table(name = "INDICATOR_EMA")
+public class IndicatorEma {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -30,11 +30,11 @@ public class IndicatorSma {
 	private Type type;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="PERIOD_ID", foreignKey=@ForeignKey(name="SMA_PERIOD_FK"))
+	@JoinColumn(name="PERIOD_ID", foreignKey=@ForeignKey(name="EMA_PERIOD_FK"))
 	private Period period;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="STOCK_ID", nullable=false, foreignKey=@ForeignKey(name="SMA_STOCK_FK"))
+	@JoinColumn(name="STOCK_ID", nullable=false, foreignKey=@ForeignKey(name="EMA_STOCK_FK"))
 	private Stock stock;
 	
 	public int getId() {

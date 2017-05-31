@@ -2,9 +2,11 @@ package com.hstock.service.indicator.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.hstock.dao.indicator.SMADao;
 import com.hstock.dao.period.PeriodDao;
 import com.hstock.dao.stock.StockDao;
@@ -12,6 +14,7 @@ import com.hstock.model.IndicatorSma;
 import com.hstock.model.Period;
 import com.hstock.model.Stock;
 import com.hstock.model.Type;
+import com.hstock.service.indicator.NumberOfDay;
 import com.hstock.service.indicator.SMAService;
 
 @Service("smaService")
@@ -61,7 +64,7 @@ public class SMAServiceImpl implements SMAService{
 		
 		indicatorSma = new IndicatorSma();
 		
-		int numberOfDay = type.name().toUpperCase().equals(Type.WEEKLY.toString()) ? NUMBER_OF_FRIDAY : -1;
+		int numberOfDay = type.name().toUpperCase().equals(Type.WEEKLY.toString()) ? NumberOfDay.FRIDAY : -1;
 		List<Stock> stocks = stockDao.getAllStockToOneDay(ticket, date, numberOfDay, period);
 		
 		if(stocks.size() == 0){
@@ -73,13 +76,14 @@ public class SMAServiceImpl implements SMAService{
 			sum += stock.getClosePrice();
 		}
 		
-		indicatorSma.setStock(stocks.get(period - 1));
+		indicatorSma.setStock(stocks.get(0));
 		indicatorSma.setType(type);
 		indicatorSma.setValue(sum / period);
 		indicatorSma.setPeriod(periodDao.getPeriodByValue(period));
 		
-		int id = (int) smaDao.save(indicatorSma);
-		indicatorSma.setId(id);
+		//int id = (int) smaDao.save(indicatorSma);
+		//indicatorSma.setId(id);
+		
 		return indicatorSma;
 	}
 	
@@ -91,22 +95,22 @@ public class SMAServiceImpl implements SMAService{
 	 */
 	public Object SMA(String ticket, int period, Type type){
 		
+		int numberOfDay = type.name().toUpperCase().equals(Type.WEEKLY.toString()) ? NumberOfDay.FRIDAY : -1;
+		
+		List<Stock> stocks = stockDao.getAllStock(ticket, numberOfDay);
+		
 		/**
 		 * Load all of data Simple Moving Average from database 
 		 */
 		List<IndicatorSma> indicatorSmas = smaDao.getListIndicatorSmaByTicketNameAndPeriod(ticket, period, type);
 		
-		if(indicatorSmas != null && indicatorSmas.size() > 0){
+		if(indicatorSmas != null && indicatorSmas.size() == (stocks.size() - period + 1)){
 			return indicatorSmas;
 		}
 		
 		/**
 		 * If data is loaded form database is empty, calculation all data and store those in database 
 		 */
-		
-		int numberOfDay = type.name().toUpperCase().equals(Type.WEEKLY.toString()) ? NUMBER_OF_FRIDAY : -1;
-		
-		List<Stock> stocks = stockDao.getAllStock(ticket, numberOfDay);
 		
 		if(period > stocks.size()){
 			return null;
@@ -129,10 +133,14 @@ public class SMAServiceImpl implements SMAService{
 			indicatorSma.setType(type);
 			indicatorSma.setStock(stocks.get(i));
 			indicatorSma.setValue(x);
-			indicatorSma.setPeriod(periodObj);
 			
-			int id = (int) smaDao.save(indicatorSma);
-			indicatorSma.setId(id);
+			if(periodObj != null){
+				indicatorSma.setPeriod(periodObj);
+				int id = (int) smaDao.save(indicatorSma);
+				indicatorSma.setId(id);
+			}
+				
+			
 			
 			indicatorSmas.add(indicatorSma);
 		}

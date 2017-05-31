@@ -16,14 +16,15 @@ public class PeriodDaoImpl extends AbstractGenericDao<Period> implements PeriodD
 	public Period getPeriodByValue(int value) {
 		String hql = "FROM Period where value = :value";
 		List<Period> periods = getSession().createQuery(hql).setParameter("value", value).list();
-		if(periods.size() == 0){
-			Period p = new Period(value);
-			int id = (int) getSession().save(p);
-			p.setId(id);
-			return p;
+		if(periods.size() == 1){
+//			Period p = new Period(value);
+//			int id = (int) getSession().save(p);
+//			p.setId(id);
+//			return p;
+			return periods.get(0);
 		}
 		
-		return periods.get(0);
+		return null;
 	}
 
 }

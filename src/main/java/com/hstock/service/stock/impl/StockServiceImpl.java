@@ -102,11 +102,11 @@ public class StockServiceImpl implements StockService{
         	double difference = stocks.get(i).getClosePrice() - stocks.get(i-1).getClosePrice();
         	
         	double currentGain = difference >= 0 ? difference : 0;
-        	double avgGain = ((double)rsi.get(k - 1).get("avgGain") * (period - 1) + currentGain) / 14;
+        	double avgGain = ((double)rsi.get(k - 1).get("avgGain") * (period - 1) + currentGain) / period;
         	map.put("avgGain", avgGain);
         	
         	double currentLoss = difference < 0 ? Math.abs(difference) : 0;
-        	double avgLoss = ((double) rsi.get(k - 1).get("avgLoss") * (period - 1) + currentLoss) / 14;
+        	double avgLoss = ((double) rsi.get(k - 1).get("avgLoss") * (period - 1) + currentLoss) / period;
         	map.put("avgLoss", avgLoss);
         	
         	double rs = avgGain/avgLoss;

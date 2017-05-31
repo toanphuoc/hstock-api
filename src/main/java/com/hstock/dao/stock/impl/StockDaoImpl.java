@@ -30,4 +30,16 @@ public class StockDaoImpl extends AbstractGenericDao<Stock> implements StockDao{
 					.setParameter("numberOfDate", numberOfDay)
 					.setParameter("limit", period).list();
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional
+	public List<Stock> getAllStockToDate(String ticket, String openDate,
+			int numberOfDay) {
+		String hql = "CALL getStockAllStockToDate(:ticket, :openDate, :numberOfDate)";
+		return getSession().createSQLQuery(hql).addEntity(Stock.class)
+				.setParameter("ticket", ticket)
+				.setParameter("openDate", openDate)
+				.setParameter("numberOfDate", numberOfDay).list();
+	}
 }

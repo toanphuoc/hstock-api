@@ -68,7 +68,6 @@ public class Indicators {
 		return rs;
 	}
 
-	
 	/**
 	 * Calculator Exponential Moving Average all of stock
 	 * @param stocks

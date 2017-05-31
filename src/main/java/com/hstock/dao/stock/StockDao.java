@@ -26,4 +26,13 @@ public interface StockDao extends GenericDao<Stock>{
 	 * @return
 	 */
 	public List<Stock> getAllStockToOneDay(String ticket, String openDate, int numberOfDay, int period);
+	
+	/**
+	 * 
+	 * @param ticket
+	 * @param openDate
+	 * @param numverOfDay
+	 * @return
+	 */
+	public List<Stock> getAllStockToDate(String ticket, String openDate, int numberOfDay);
 }

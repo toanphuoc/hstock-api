@@ -14,43 +14,44 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "INDICATOR_SMA")
-public class IndicatorSma {
+@Table(name = "INDICATOR_RSI")
+public class IndicatorRsi {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name = "ID", unique = true, nullable = false)
 	private int id;
 	
-	@Column(name = "VALUE")
-	private double value;
-	
 	@Enumerated(EnumType.STRING)
 	@Column(name = "type")
 	private Type type;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="PERIOD_ID", foreignKey=@ForeignKey(name="SMA_PERIOD_FK"))
+	@JoinColumn(name="PERIOD_ID", foreignKey=@ForeignKey(name="EMA_PERIOD_FK"))
 	private Period period;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="STOCK_ID", nullable=false, foreignKey=@ForeignKey(name="SMA_STOCK_FK"))
+	@JoinColumn(name="STOCK_ID", nullable=false, foreignKey=@ForeignKey(name="EMA_STOCK_FK"))
 	private Stock stock;
+
+	@Column(name="AVG_GAIN")
+	private double avgGain;
 	
+	@Column(name="AVG_LOSS")
+	private double avgLoss;
+	
+	@Column(name="RS")
+	private double rs;
+	
+	@Column(name="RSI")
+	private double rsi;
+
 	public int getId() {
 		return id;
 	}
 
 	public void setId(int id) {
 		this.id = id;
-	}
-
-	public double getValue() {
-		return value;
-	}
-
-	public void setValue(double value) {
-		this.value = value;
 	}
 
 	public Type getType() {
@@ -75,5 +76,37 @@ public class IndicatorSma {
 
 	public void setStock(Stock stock) {
 		this.stock = stock;
+	}
+
+	public double getAvgGain() {
+		return avgGain;
+	}
+
+	public void setAvgGain(double avgGain) {
+		this.avgGain = avgGain;
+	}
+
+	public double getAvgLoss() {
+		return avgLoss;
+	}
+
+	public void setAvgLoss(double avgLoss) {
+		this.avgLoss = avgLoss;
+	}
+
+	public double getRs() {
+		return rs;
+	}
+
+	public void setRs(double rs) {
+		this.rs = rs;
+	}
+
+	public double getRsi() {
+		return rsi;
+	}
+
+	public void setRsi(double rsi) {
+		this.rsi = rsi;
 	}
 }

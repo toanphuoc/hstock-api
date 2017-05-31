@@ -54,4 +54,21 @@ public class SMADaoImpl extends AbstractGenericDao<IndicatorSma> implements SMAD
 			return indicatorSmas.get(0);
 		return null;
 	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public IndicatorSma getIndicatorSma(String ticket, int period, String date,
+			Type type) {
+		String hql = "CALL getIndicatorItem(:ticket, :period, :type, :date)";
+		
+		List<IndicatorSma> indicatorSmas = getSession().createSQLQuery(hql).addEntity(IndicatorSma.class)
+				.setParameter("ticket", ticket)
+				.setParameter("period", period)
+				.setParameter("type", type.name().toString())
+				.setParameter("date", date).list();
+		
+		if(indicatorSmas != null && indicatorSmas.size() >= 1)
+			return indicatorSmas.get(0);
+		return null;
+	}
 }
