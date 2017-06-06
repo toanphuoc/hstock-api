@@ -38,6 +38,88 @@ public class IndicatorMACD {
 	@JoinColumn(name="PERIOD_Y_ID", foreignKey=@ForeignKey(name="MACD_PERIOD_Y_FK"))
 	private Period periodY;
 	
+	@ManyToOne(fetch=FetchType.EAGER)
+	@JoinColumn(name="PERIOD_SIGNAL_ID", foreignKey=@ForeignKey(name="MACD_PERIOD_SIGNAL_FK"))
+	private Period periodSignal;
+	
+	@Column(name = "SIGNAL_VALUE")
+	private double signal;
+	
+	@Column(name = "MACD_HISTOGRAM")
+	private double MACDHistogram;
+	
 	@Column(name = "MACD")
 	private double MACD;
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public Type getType() {
+		return type;
+	}
+
+	public void setType(Type type) {
+		this.type = type;
+	}
+
+	public Stock getStock() {
+		return stock;
+	}
+
+	public void setStock(Stock stock) {
+		this.stock = stock;
+	}
+
+	public Period getPeriodX() {
+		return periodX;
+	}
+
+	public void setPeriodX(Period periodX) {
+		this.periodX = periodX;
+	}
+
+	public Period getPeriodY() {
+		return periodY;
+	}
+
+	public void setPeriodY(Period periodY) {
+		this.periodY = periodY;
+	}
+
+	public double getMACD() {
+		return MACD;
+	}
+
+	public void setMACD(double mACD) {
+		MACD = mACD;
+	}
+
+	public Period getPeriodSignal() {
+		return periodSignal;
+	}
+
+	public void setPeriodSignal(Period periodSignal) {
+		this.periodSignal = periodSignal;
+	}
+
+	public double getSignal() {
+		return signal;
+	}
+
+	public void setSignal(double signal) {
+		this.signal = signal;
+	}
+
+	public double getMACDHistogram() {
+		return MACDHistogram;
+	}
+
+	public void setMACDHistogram(double mACDHistogram) {
+		MACDHistogram = mACDHistogram;
+	}
 }

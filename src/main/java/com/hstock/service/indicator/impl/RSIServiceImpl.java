@@ -119,10 +119,10 @@ public class RSIServiceImpl implements RSIService{
         	double loss = ((double) indicatorRsis.get(k - 1).getAvgLoss() * (period - 1) + currentLoss) / period;
         	indicatorRsi.setAvgLoss(loss);
         	
-        	double rsIndex = avgGain/avgLoss;
+        	double rsIndex = gain/loss;
         	indicatorRsi.setRs(rsIndex);
         	
-        	double valueRSI = 100 - (100/(1 + rs));
+        	double valueRSI = 100 - (100/(1 + rsIndex));
         	indicatorRsi.setRsi(valueRSI);
         	
         	indicatorRsi.setStock(stocks.get(i));
@@ -222,10 +222,10 @@ public class RSIServiceImpl implements RSIService{
         	double loss = ((double) indicatorRsis.get(k - 1).getAvgLoss() * (period - 1) + currentLoss) / period;
         	indicatorRsi.setAvgLoss(loss);
         	
-        	double rsIndex = avgGain/avgLoss;
+        	double rsIndex = gain/loss;
         	indicatorRsi.setRs(rsIndex);
         	
-        	double valueRSI = 100 - (100/(1 + rs));
+        	double valueRSI = 100 - (100/(1 + rsIndex));
         	indicatorRsi.setRsi(valueRSI);
         	
         	indicatorRsi.setStock(stocks.get(i));

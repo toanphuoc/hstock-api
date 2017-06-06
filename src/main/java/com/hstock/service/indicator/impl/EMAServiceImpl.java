@@ -32,22 +32,19 @@ public class EMAServiceImpl implements EMAService{
 	@Override
 	@Transactional
 	public Object EMA(String ticket, String date, int period, String type) {
-		if(type != null && type.toUpperCase().equals(Type.WEEKLY.toString())){
-			if(date != null){
-				return EMA(ticket, date, period, Type.WEEKLY);
-			}
-			return EMA(ticket, period, Type.WEEKLY);
-		}
+		Type _type = Type.valueOf(type.toUpperCase());
 		if(date != null){
-			return EMA(ticket, date, period, Type.DAILY);
+			return EMA(ticket, date, period, _type);
 		}
-		return EMA(ticket, period, Type.DAILY);
-	}
-
-	private Object EMA(String ticket, int period, Type type) {
-		int numberOfDay = type.name().toUpperCase().equals(Type.WEEKLY.toString()) ? NumberOfDay.FRIDAY : -1;
+		int numberOfDay = _type.name().toUpperCase().equals(Type.WEEKLY.toString()) ? NumberOfDay.FRIDAY : -1;
 		
 		List<Stock> stocks = stockDao.getAllStock(ticket, numberOfDay);
+		return EMA(stocks, ticket, period, _type);
+	}
+
+	@Override
+	@Transactional
+	public Object EMA(List<Stock> stocks, String ticket, int period, Type type) {
 		
 		List<IndicatorEma> indicatorEmas = emaDao.getListIndicatorEmaByTicketNameAndPeriod(ticket, period, type);
 		
@@ -110,7 +107,7 @@ public class EMAServiceImpl implements EMAService{
 		return indicatorEmas;
 	}
 
-	private Object EMA(String ticket, String date, int period, Type type) {
+	public Object EMA(String ticket, String date, int period, Type type) {
 		
 		IndicatorEma indicatorEma = emaDao.getIndicatorEmaAtOneDate(ticket, period, date, type);
 		
