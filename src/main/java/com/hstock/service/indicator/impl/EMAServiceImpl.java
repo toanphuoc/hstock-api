@@ -87,7 +87,7 @@ public class EMAServiceImpl implements EMAService{
 		for (int i = period; i < stocks.size(); i++) {
 			IndicatorEma indicatorEma = new IndicatorEma();
 			double previous = (double) indicatorEmas.get(k - 1).getValue();
-			double value = smoothing * (stocks.get(i).getClosePrice() - previous) + previous;	
+			double value = smoothing * (stocks.get(i).getClosePrice() - previous) + previous;
 			
 			indicatorEma.setStock(stocks.get(i));
 			indicatorEma.setType(type);
