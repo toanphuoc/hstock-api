@@ -30,18 +30,16 @@ public class RSIServiceImpl implements RSIService{
 	@Override
 	@Transactional
 	public Object RSI(String ticket, String date, int period, String type) {
-		if(type != null && type.toUpperCase().equals(Type.WEEKLY.toString())){
-			if(date != null){
-				return RSI(ticket, date, period, Type.WEEKLY);
-			}
-			return RSI(ticket, period,  Type.WEEKLY);
-		}
 		
+		Type _type = Type.valueOf(type.toUpperCase());
 		if(date != null){
-			return RSI(ticket, date, period, Type.DAILY);
+			return RSI(ticket, date, period, _type);
 		}
 		
-		return RSI(ticket, period,  Type.DAILY);
+		int numberOfDay = _type.name().toUpperCase().equals(Type.WEEKLY.toString()) ? NumberOfDay.FRIDAY : -1;
+		
+		List<Stock> stocks = stockDao.getAllStock(ticket, numberOfDay);
+		return RSI(stocks, ticket, period,  _type);
 	}
 	
 	private Object RSI(String ticket, String date, int period, Type type){
@@ -142,11 +140,9 @@ public class RSIServiceImpl implements RSIService{
 		return indicatorRsis.get(indicatorRsis.size() - 1);
 	}
 	
-	public Object RSI(String ticket, int period, Type type){
-		
-		int numberOfDay = type.name().toUpperCase().equals(Type.WEEKLY.toString()) ? NumberOfDay.FRIDAY : -1;
-		
-		List<Stock> stocks = stockDao.getAllStock(ticket, numberOfDay);
+	@Override
+	@Transactional
+	public Object RSI(List<Stock> stocks, String ticket, int period, Type type){
 		
 		List<IndicatorRsi> indicatorRsis = rsiDao.getListIndicatorRsiByTicketNameAndPeriod(ticket, period, type);
 		

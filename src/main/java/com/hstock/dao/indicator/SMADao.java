@@ -27,23 +27,4 @@ public interface SMADao extends GenericDao<IndicatorSma>{
 	 */
 	public IndicatorSma getIndicatorSmaAtOneDate(String ticketName, int period, String date, Type type);
 	
-	/**
-	 * Get indicator SMA daily at a time by name and period
-	 * @param ticket
-	 * @param period
-	 * @param date
-	 * @return
-	 */
-	public IndicatorSma getSMAAtOneDayByWeekly(String ticket, int period, String date);
-	
-	/**
-	 * 
-	 * @param ticket
-	 * @param period
-	 * @param date
-	 * @param type
-	 * @return
-	 */
-	public IndicatorSma getIndicatorSma(String ticket, int period, String date, Type type);
-	
 }

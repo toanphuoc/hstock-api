@@ -15,7 +15,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "INDICATOR_MACD")
-public class IndicatorMACD {
+public class IndicatorMacd {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -32,16 +32,15 @@ public class SMAServiceImpl implements SMAService{
 	@Override
 	@Transactional
 	public Object SMA(String ticket, String date, int period, String type) {
-		if(type != null && type.toUpperCase().equals(Type.WEEKLY.toString())){
-			if(date != null){
-				return SMA(ticket, date, period, Type.WEEKLY);
-			}
-			return SMA(ticket, period, Type.WEEKLY);
-		}
+		Type _type = Type.valueOf(type.toUpperCase());
 		if(date != null){
-			return SMA(ticket, date, period, Type.DAILY);
+			return SMA(ticket, date, period, _type);
 		}
-		return SMA(ticket, period, Type.DAILY);
+		
+		int numberOfDay = _type.name().toUpperCase().equals(Type.WEEKLY.toString()) ? NumberOfDay.FRIDAY : -1;
+		
+		List<Stock> stocks = stockDao.getAllStock(ticket, numberOfDay);
+		return SMA(stocks, ticket, period, _type);
 	}
 	
 	/**
@@ -52,12 +51,8 @@ public class SMAServiceImpl implements SMAService{
 	public Object SMA(String ticket, String date, int period, Type type){
 		
 		//Get data from database
-		IndicatorSma indicatorSma = null;
-		if(type.equals(Type.DAILY)){
-			indicatorSma  = smaDao.getIndicatorSmaAtOneDate(ticket, period, date, type);
-		}else if(type.equals(Type.WEEKLY)){
-			indicatorSma = smaDao.getSMAAtOneDayByWeekly(ticket, period, date);
-		}
+		IndicatorSma indicatorSma = smaDao.getIndicatorSmaAtOneDate(ticket, period, date, type);
+		
 		
 		if(indicatorSma != null)
 			return indicatorSma;
@@ -93,12 +88,9 @@ public class SMAServiceImpl implements SMAService{
 	 * @param period
 	 * @return
 	 */
-	public Object SMA(String ticket, int period, Type type){
-		
-		int numberOfDay = type.name().toUpperCase().equals(Type.WEEKLY.toString()) ? NumberOfDay.FRIDAY : -1;
-		
-		List<Stock> stocks = stockDao.getAllStock(ticket, numberOfDay);
-		
+	@Override
+	@Transactional
+	public Object SMA(List<Stock> stocks, String ticket, int period, Type type){
 		/**
 		 * Load all of data Simple Moving Average from database 
 		 */
@@ -139,9 +131,6 @@ public class SMAServiceImpl implements SMAService{
 				int id = (int) smaDao.save(indicatorSma);
 				indicatorSma.setId(id);
 			}
-				
-			
-			
 			indicatorSmas.add(indicatorSma);
 		}
 		

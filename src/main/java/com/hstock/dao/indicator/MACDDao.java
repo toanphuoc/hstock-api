@@ -3,12 +3,12 @@ package com.hstock.dao.indicator;
 import java.util.List;
 
 import com.hstock.dao.GenericDao;
-import com.hstock.model.IndicatorMACD;
+import com.hstock.model.IndicatorMacd;
 import com.hstock.model.Type;
 
-public interface MACDDao extends GenericDao<IndicatorMACD>{
+public interface MACDDao extends GenericDao<IndicatorMacd>{
 
-	public List<IndicatorMACD> getListIndicatorEmaByTicketNameAndPeriod(String ticket, int periodX, int periodY, int periodSignal, Type type);
+	public List<IndicatorMacd> getListIndicatorEmaByTicketNameAndPeriod(String ticket, int periodX, int periodY, int periodSignal, Type type);
 	
-	public IndicatorMACD getIndicatorMACDAtOneDate(String ticket, int periodX, int periodY, int periodSignal, String date, Type type);
+	public IndicatorMacd getIndicatorMACDAtOneDate(String ticket, int periodX, int periodY, int periodSignal, String date, Type type);
 }

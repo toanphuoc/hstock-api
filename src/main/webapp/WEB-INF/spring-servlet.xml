@@ -37,7 +37,8 @@
 				<beans:value>com.hstock.model.IndicatorSma</beans:value>
 				<beans:value>com.hstock.model.IndicatorEma</beans:value>
 				<beans:value>com.hstock.model.IndicatorRsi</beans:value>
-				<beans:value>com.hstock.model.IndicatorMACD</beans:value>
+				<beans:value>com.hstock.model.IndicatorMacd</beans:value>
+				<beans:value>com.hstock.model.IndicatorStochRSI</beans:value>
 			</beans:list>
 		</beans:property>
 		<beans:property name="hibernateProperties">
@@ -76,4 +77,7 @@
 	
 	<beans:bean id="macdDao" class="com.hstock.dao.indicator.impl.MACDDaoImpl"></beans:bean>
 	<beans:bean id="macdService" class="com.hstock.service.indicator.impl.MACDServiceImpl"></beans:bean>
+	
+	<beans:bean id="stochRSIDao" class="com.hstock.dao.indicator.impl.StochRSIDaoImpl"></beans:bean>
+	<beans:bean id="stochRSIService" class="com.hstock.service.indicator.impl.StochRSIServiceImpl"></beans:bean>
 </beans:beans>

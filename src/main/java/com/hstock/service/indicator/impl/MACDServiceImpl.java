@@ -11,7 +11,7 @@ import com.hstock.dao.indicator.MACDDao;
 import com.hstock.dao.period.PeriodDao;
 import com.hstock.dao.stock.StockDao;
 import com.hstock.model.IndicatorEma;
-import com.hstock.model.IndicatorMACD;
+import com.hstock.model.IndicatorMacd;
 import com.hstock.model.Period;
 import com.hstock.model.Stock;
 import com.hstock.model.Type;
@@ -43,19 +43,19 @@ public class MACDServiceImpl implements MACDService{
 		int numberOfDay = type.toUpperCase().equals(Type.WEEKLY.toString()) ? NumberOfDay.FRIDAY : -1;
 		
 		if(date != null){
-			IndicatorMACD indicatorMACD = macdDao.getIndicatorMACDAtOneDate(ticket, periodX, periodY, periodSignal, date, _type);
+			IndicatorMacd indicatorMACD = macdDao.getIndicatorMACDAtOneDate(ticket, periodX, periodY, periodSignal, date, _type);
 			if(indicatorMACD != null){
 				return indicatorMACD;
 			}
 			List<Stock> stocks = stockDao.getAllStockToDate(ticket, date, numberOfDay);
 
-			List<IndicatorMACD> indicatorMACDs =  (List<IndicatorMACD>) MACD(stocks, ticket, periodX, periodY, periodSignal, _type, false);
+			List<IndicatorMacd> indicatorMACDs =  (List<IndicatorMacd>) MACD(stocks, ticket, periodX, periodY, periodSignal, _type, false);
 			return indicatorMACDs.get(indicatorMACDs.size() - 1);
 		}
 		
 		List<Stock> stocks = stockDao.getAllStock(ticket, numberOfDay);
 		
-		List<IndicatorMACD> indicatorMACDs = macdDao.getListIndicatorEmaByTicketNameAndPeriod(ticket, periodX, periodY, periodSignal, _type);
+		List<IndicatorMacd> indicatorMACDs = macdDao.getListIndicatorEmaByTicketNameAndPeriod(ticket, periodX, periodY, periodSignal, _type);
 		
 		if(indicatorMACDs.size() == (stocks.size() - periodY + 1)){
 			return indicatorMACDs;
@@ -66,7 +66,7 @@ public class MACDServiceImpl implements MACDService{
 	
 	@SuppressWarnings("unchecked")
 	public Object MACD(List<Stock> stocks, String ticket, int periodX, int periodY, int periodSignal, Type type, boolean isSave){
-		List<IndicatorMACD> indicatorMACDs = new ArrayList<IndicatorMACD>();
+		List<IndicatorMacd> indicatorMACDs = new ArrayList<IndicatorMacd>();
 		
 		Period periodXObj = periodDao.getPeriodByValue(periodX);
 		Period periodYObj = periodDao.getPeriodByValue(periodY);
@@ -90,7 +90,7 @@ public class MACDServiceImpl implements MACDService{
 		double firstSignalValue = 0.00;
 		double smoothing = (double) 2 / (periodSignal + 1);
 		for (int i = periodY - periodX; i < emaX.size() && j < emaY.size(); i++) {
-			IndicatorMACD indicatorMACD = new IndicatorMACD();
+			IndicatorMacd indicatorMACD = new IndicatorMacd();
 			double macd = emaX.get(i).getValue() - emaY.get(j).getValue();
 			
 			//Calculator signal
