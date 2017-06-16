@@ -3,28 +3,28 @@ package com.hstock.dao.indicator;
 import java.util.List;
 
 import com.hstock.dao.GenericDao;
-import com.hstock.model.IndicatorSma;
 import com.hstock.model.Type;
+import com.hstock.model.indicator.IndicatorSMA;
 
-public interface SMADao extends GenericDao<IndicatorSma>{
+public interface SMADao extends GenericDao<IndicatorSMA>{
 	
 	/**
-	 * Get list indicator SMA daily or weekly by name and period value
+	 * Get list indicator SMA
 	 * @param ticketName
 	 * @param period
 	 * @param type
 	 * @return
 	 */
-	public List<IndicatorSma> getListIndicatorSmaByTicketNameAndPeriod(String ticketName, int period, Type type);
+	public List<IndicatorSMA> getListIndicatorSMA(String ticketName, int period, Type type);
 	
 	/**
-	 * Get indicator SMA  weekly at a time by name and period
+	 * Get indicator SMA at one day
 	 * @param ticketName
 	 * @param period
 	 * @param date
 	 * @param type
 	 * @return
 	 */
-	public IndicatorSma getIndicatorSmaAtOneDate(String ticketName, int period, String date, Type type);
+	public IndicatorSMA getIndicatorSMAAtOneDate(String ticketName, int period, String date, Type type);
 	
 }

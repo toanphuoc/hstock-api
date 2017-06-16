@@ -34,11 +34,12 @@
 			<beans:list>
 				<beans:value>com.hstock.model.Stock</beans:value>
 				<beans:value>com.hstock.model.Period</beans:value>
-				<beans:value>com.hstock.model.IndicatorSma</beans:value>
-				<beans:value>com.hstock.model.IndicatorEma</beans:value>
-				<beans:value>com.hstock.model.IndicatorRsi</beans:value>
-				<beans:value>com.hstock.model.IndicatorMacd</beans:value>
-				<beans:value>com.hstock.model.IndicatorStochRSI</beans:value>
+				<beans:value>com.hstock.model.indicator.IndicatorSMA</beans:value>
+				<beans:value>com.hstock.model.indicator.IndicatorEMA</beans:value>
+				<beans:value>com.hstock.model.indicator.IndicatorRSI</beans:value>
+				<beans:value>com.hstock.model.indicator.IndicatorMACD</beans:value>
+				<beans:value>com.hstock.model.indicator.IndicatorStochRSI</beans:value>
+				<beans:value>com.hstock.model.indicator.IndicatorBB</beans:value>
 			</beans:list>
 		</beans:property>
 		<beans:property name="hibernateProperties">
@@ -80,4 +81,6 @@
 	
 	<beans:bean id="stochRSIDao" class="com.hstock.dao.indicator.impl.StochRSIDaoImpl"></beans:bean>
 	<beans:bean id="stochRSIService" class="com.hstock.service.indicator.impl.StochRSIServiceImpl"></beans:bean>
+	
+	<beans:bean id="bbService" class="com.hstock.service.indicator.impl.BBServiceImpl"></beans:bean>
 </beans:beans>

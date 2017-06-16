@@ -1,4 +1,4 @@
-package com.hstock.model;
+package com.hstock.model.indicator;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -12,6 +12,10 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
+
+import com.hstock.model.Period;
+import com.hstock.model.Stock;
+import com.hstock.model.Type;
 
 @Entity
 @Table(name = "INDICATOR_STOCH_RSI")
@@ -29,10 +33,10 @@ public class IndicatorStochRSI {
 	private double stochRsi;
 	
 	@Column(name = "sk")
-	private double sk;
+	private double sk = -1.00;
 	
 	@Column(name = "sd")
-	private double sd;
+	private double sd = -1.00;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
 	@JoinColumn(name="PERIOD_RSI_ID", foreignKey=@ForeignKey(name="STOCH_RSI_PERIOD_RSI_FK"))

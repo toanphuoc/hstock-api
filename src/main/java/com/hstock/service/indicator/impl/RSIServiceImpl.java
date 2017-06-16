@@ -2,16 +2,18 @@ package com.hstock.service.indicator.impl;
 
 import java.util.ArrayList;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.hstock.dao.indicator.RSIDao;
 import com.hstock.dao.period.PeriodDao;
 import com.hstock.dao.stock.StockDao;
-import com.hstock.model.IndicatorRsi;
 import com.hstock.model.Period;
 import com.hstock.model.Stock;
 import com.hstock.model.Type;
+import com.hstock.model.indicator.IndicatorRSI;
 import com.hstock.service.indicator.NumberOfDay;
 import com.hstock.service.indicator.RSIService;
 
@@ -43,7 +45,7 @@ public class RSIServiceImpl implements RSIService{
 	}
 	
 	private Object RSI(String ticket, String date, int period, Type type){
-		IndicatorRsi indicatorRsi = rsiDao.getIndicatorRsiAtOneDate(ticket, period, date, type);
+		IndicatorRSI indicatorRsi = rsiDao.getIndicatorRSIAtOneDate(ticket, period, date, type);
 		
 		if(indicatorRsi != null){
 			return indicatorRsi;
@@ -55,9 +57,9 @@ public class RSIServiceImpl implements RSIService{
 		
 		List<Stock> stocks = stockDao.getAllStockToDate(ticket, date, numberOfDay);
 		
-		List<IndicatorRsi> indicatorRsis = new ArrayList<IndicatorRsi>();
+		List<IndicatorRSI> indicatorRsis = new ArrayList<IndicatorRSI>();
 		
-		IndicatorRsi firstItem = new IndicatorRsi();
+		IndicatorRSI firstItem = new IndicatorRSI();
 		
 		double sumGain = 0;
         double sumLoss = 0;
@@ -105,7 +107,7 @@ public class RSIServiceImpl implements RSIService{
 		
 		int k = 1;
         for (int i = period + 1; i < stocks.size(); i++) {
-        	indicatorRsi = new IndicatorRsi();
+        	indicatorRsi = new IndicatorRSI();
         	
         	double difference = stocks.get(i).getClosePrice() - stocks.get(i-1).getClosePrice();
         	
@@ -144,7 +146,7 @@ public class RSIServiceImpl implements RSIService{
 	@Transactional
 	public Object RSI(List<Stock> stocks, String ticket, int period, Type type){
 		
-		List<IndicatorRsi> indicatorRsis = rsiDao.getListIndicatorRsiByTicketNameAndPeriod(ticket, period, type);
+		List<IndicatorRSI> indicatorRsis = rsiDao.getListIndicatorRSI(ticket, period, type);
 		
 		if(indicatorRsis != null && (indicatorRsis.size() == stocks.size() - period)){
 			return indicatorRsis;
@@ -154,11 +156,11 @@ public class RSIServiceImpl implements RSIService{
 			return null;
 		}
 		
-		indicatorRsis = new ArrayList<IndicatorRsi>();
+		indicatorRsis = new ArrayList<IndicatorRSI>();
 		
 		Period periodObj = periodDao.getPeriodByValue(period);
 		
-		IndicatorRsi firstItem = new IndicatorRsi();
+		IndicatorRSI firstItem = new IndicatorRSI();
 		
 		double sumGain = 0;
         double sumLoss = 0;
@@ -206,7 +208,7 @@ public class RSIServiceImpl implements RSIService{
 		
 		int k = 1;
         for (int i = period + 1; i < stocks.size(); i++) {
-        	IndicatorRsi indicatorRsi = new IndicatorRsi();
+        	IndicatorRSI indicatorRsi = new IndicatorRSI();
         	
         	double difference = stocks.get(i).getClosePrice() - stocks.get(i-1).getClosePrice();
         	

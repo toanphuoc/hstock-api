@@ -10,10 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.hstock.dao.indicator.EMADao;
 import com.hstock.dao.period.PeriodDao;
 import com.hstock.dao.stock.StockDao;
-import com.hstock.model.IndicatorEma;
 import com.hstock.model.Period;
 import com.hstock.model.Stock;
 import com.hstock.model.Type;
+import com.hstock.model.indicator.IndicatorEMA;
 import com.hstock.service.indicator.EMAService;
 import com.hstock.service.indicator.NumberOfDay;
 
@@ -46,7 +46,7 @@ public class EMAServiceImpl implements EMAService{
 	@Transactional
 	public Object EMA(List<Stock> stocks, String ticket, int period, Type type) {
 		
-		List<IndicatorEma> indicatorEmas = emaDao.getListIndicatorEmaByTicketNameAndPeriod(ticket, period, type);
+		List<IndicatorEMA> indicatorEmas = emaDao.getListIndicatorEMA(ticket, period, type);
 		
 		//Load from database
 		if(indicatorEmas != null && indicatorEmas.size() == (stocks.size() - period + 1)){
@@ -59,10 +59,10 @@ public class EMAServiceImpl implements EMAService{
 		
 		Period periodObj = periodDao.getPeriodByValue(period);
 		
-		indicatorEmas = new ArrayList<IndicatorEma>();
+		indicatorEmas = new ArrayList<IndicatorEMA>();
 		
 		//Calculator of first item
-		IndicatorEma firstItem = new IndicatorEma();
+		IndicatorEMA firstItem = new IndicatorEMA();
 		double ema = 0.00;
 		for (int i = 0; i < period; i++) {
 			ema += stocks.get(i).getClosePrice();
@@ -85,7 +85,7 @@ public class EMAServiceImpl implements EMAService{
 		int k = 1;
 		double smoothing = (double) 2 / (period + 1);
 		for (int i = period; i < stocks.size(); i++) {
-			IndicatorEma indicatorEma = new IndicatorEma();
+			IndicatorEMA indicatorEma = new IndicatorEMA();
 			double previous = (double) indicatorEmas.get(k - 1).getValue();
 			double value = smoothing * (stocks.get(i).getClosePrice() - previous) + previous;
 			
@@ -109,7 +109,7 @@ public class EMAServiceImpl implements EMAService{
 
 	public Object EMA(String ticket, String date, int period, Type type) {
 		
-		IndicatorEma indicatorEma = emaDao.getIndicatorEmaAtOneDate(ticket, period, date, type);
+		IndicatorEMA indicatorEma = emaDao.getIndicatorEMAAtOneDate(ticket, period, date, type);
 		
 		if(indicatorEma != null)
 			return indicatorEma;
@@ -120,10 +120,10 @@ public class EMAServiceImpl implements EMAService{
 		
 		List<Stock> stocks = stockDao.getAllStockToDate(ticket, date, numberOfDay);
 		
-		List<IndicatorEma> indicatorEmas = new ArrayList<IndicatorEma>();
+		List<IndicatorEMA> indicatorEmas = new ArrayList<IndicatorEMA>();
 		
 		//Calculator of first item
-		IndicatorEma firstItem = new IndicatorEma();
+		IndicatorEMA firstItem = new IndicatorEMA();
 		double ema = 0.00;
 		for (int i = 0; i < period; i++) {
 			ema += stocks.get(i).getClosePrice();
@@ -144,7 +144,7 @@ public class EMAServiceImpl implements EMAService{
 		int k = 1;
 		double smoothing = (double) 2 / (period + 1);
 		for (int i = period; i < stocks.size(); i++) {
-			IndicatorEma item = new IndicatorEma();
+			IndicatorEMA item = new IndicatorEMA();
 			double previous = (double) indicatorEmas.get(k - 1).getValue();
 			double value = smoothing * (stocks.get(i).getClosePrice() - previous) + previous;
 			

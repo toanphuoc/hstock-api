@@ -10,10 +10,10 @@ import org.springframework.transaction.annotation.Transactional;
 import com.hstock.dao.indicator.SMADao;
 import com.hstock.dao.period.PeriodDao;
 import com.hstock.dao.stock.StockDao;
-import com.hstock.model.IndicatorSma;
 import com.hstock.model.Period;
 import com.hstock.model.Stock;
 import com.hstock.model.Type;
+import com.hstock.model.indicator.IndicatorSMA;
 import com.hstock.service.indicator.NumberOfDay;
 import com.hstock.service.indicator.SMAService;
 
@@ -51,13 +51,13 @@ public class SMAServiceImpl implements SMAService{
 	public Object SMA(String ticket, String date, int period, Type type){
 		
 		//Get data from database
-		IndicatorSma indicatorSma = smaDao.getIndicatorSmaAtOneDate(ticket, period, date, type);
+		IndicatorSMA indicatorSma = smaDao.getIndicatorSMAAtOneDate(ticket, period, date, type);
 		
 		
 		if(indicatorSma != null)
 			return indicatorSma;
 		
-		indicatorSma = new IndicatorSma();
+		indicatorSma = new IndicatorSMA();
 		
 		int numberOfDay = type.name().toUpperCase().equals(Type.WEEKLY.toString()) ? NumberOfDay.FRIDAY : -1;
 		List<Stock> stocks = stockDao.getAllStockToOneDay(ticket, date, numberOfDay, period);
@@ -94,7 +94,7 @@ public class SMAServiceImpl implements SMAService{
 		/**
 		 * Load all of data Simple Moving Average from database 
 		 */
-		List<IndicatorSma> indicatorSmas = smaDao.getListIndicatorSmaByTicketNameAndPeriod(ticket, period, type);
+		List<IndicatorSMA> indicatorSmas = smaDao.getListIndicatorSMA(ticket, period, type);
 		
 		if(indicatorSmas != null && indicatorSmas.size() == (stocks.size() - period + 1)){
 			return indicatorSmas;
@@ -108,13 +108,13 @@ public class SMAServiceImpl implements SMAService{
 			return null;
 		}
 		
-		indicatorSmas = new ArrayList<IndicatorSma>();
+		indicatorSmas = new ArrayList<IndicatorSMA>();
 		
 		Period periodObj = periodDao.getPeriodByValue(period);
 		
 		for (int i = period - 1; i < stocks.size(); i++) {
 			
-			IndicatorSma indicatorSma = new IndicatorSma();
+			IndicatorSMA indicatorSma = new IndicatorSMA();
 			
 			double x = 0.00;
 			for(int j = 0; j < period; j++){

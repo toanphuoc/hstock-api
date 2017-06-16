@@ -6,18 +6,18 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.hstock.dao.AbstractGenericDao;
 import com.hstock.dao.indicator.SMADao;
-import com.hstock.model.IndicatorSma;
 import com.hstock.model.Type;
+import com.hstock.model.indicator.IndicatorSMA;
 
-public class SMADaoImpl extends AbstractGenericDao<IndicatorSma> implements SMADao{
+public class SMADaoImpl extends AbstractGenericDao<IndicatorSMA> implements SMADao{
 
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
-	public List<IndicatorSma> getListIndicatorSmaByTicketNameAndPeriod(
+	public List<IndicatorSMA> getListIndicatorSMA(
 			String ticketName, int period, Type type) {
 		String hql = "call getAllSMAOfStock(:ticket, :period, :type)";
-		return getSession().createSQLQuery(hql).addEntity(IndicatorSma.class)
+		return getSession().createSQLQuery(hql).addEntity(IndicatorSMA.class)
 						.setParameter("ticket", ticketName)
 						.setParameter("period", period)
 						.setParameter("type", type.name().toString()).list();
@@ -26,10 +26,10 @@ public class SMADaoImpl extends AbstractGenericDao<IndicatorSma> implements SMAD
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
-	public IndicatorSma getIndicatorSmaAtOneDate(String ticketName, int period,
+	public IndicatorSMA getIndicatorSMAAtOneDate(String ticketName, int period,
 			String date, Type type) {
 		String hql = "CALL getSMAAtOneDay(:ticket, :period, :type, :openDate)";			
-		List<IndicatorSma> indicatorSmas = getSession().createSQLQuery(hql).addEntity(IndicatorSma.class)
+		List<IndicatorSMA> indicatorSmas = getSession().createSQLQuery(hql).addEntity(IndicatorSMA.class)
 				.setParameter("ticket", ticketName)
 				.setParameter("period", period)
 				.setParameter("type", type.name().toString())

@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.hstock.service.indicator.BBService;
 import com.hstock.service.indicator.EMAService;
 import com.hstock.service.indicator.MACDService;
 import com.hstock.service.indicator.RSIService;
@@ -31,6 +32,9 @@ public class IndicatorController {
 	
 	@Autowired
 	private StochRSIService stochRSIService;
+	
+	@Autowired
+	private BBService bbService;
 	
 	@RequestMapping(value = "/sma", method = RequestMethod.GET, headers = "Accept=application/json")
 	@ResponseBody
@@ -80,5 +84,15 @@ public class IndicatorController {
 				@RequestParam(value = "period_sk", required = false, defaultValue="0") int periodSk, 
 				@RequestParam(value = "period_sd", required = false, defaultValue="0") int periodSd){
 		return stochRSIService.StochRSI(ticket, date, periodRsi, periodStochRsi, periodSk, periodSd, type);
+	}
+	
+	@RequestMapping(value = "/bb", method = RequestMethod.GET, headers = "Accept=application/json")
+	@ResponseBody
+	public Object BB(@RequestParam(value = "ticket") String ticket, 
+			@RequestParam(value = "date", required = false) String date, 
+			@RequestParam(value = "type", required = false, defaultValue= "daily") String type, 
+			@RequestParam(value = "period")int period, 
+			@RequestParam(value = "standardDeviation") int standardDeviation){
+		return bbService.BB(ticket, date, period, standardDeviation, type);
 	}
 }

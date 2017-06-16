@@ -1,4 +1,4 @@
-package com.hstock.model;
+package com.hstock.model.indicator;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -13,9 +13,13 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.hstock.model.Period;
+import com.hstock.model.Stock;
+import com.hstock.model.Type;
+
 @Entity
 @Table(name = "INDICATOR_MACD")
-public class IndicatorMacd {
+public class IndicatorMACD {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
