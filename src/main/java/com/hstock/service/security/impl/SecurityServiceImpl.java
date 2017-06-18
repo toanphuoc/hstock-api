@@ -43,9 +43,10 @@ public class SecurityServiceImpl implements SecuityService{
 		}
 		
 		if(isMatchPassword(password, user.getPassword(), user.getSalt())){
-			accessToken = Base64.getEncoder().encodeToString((user.getUserId() + RandomStringUtils.random(8)).getBytes());
+			ShaPasswordEncoder encoder = new ShaPasswordEncoder(256);
+			accessToken = encoder.encodePassword(user.getUserName(), RandomStringUtils.random(8));
 			
-			AccessToken token = new AccessToken();
+			AccessToken token = new AccessToken(accessToken, user);
 			accessTokenDao.addAccessToken(token);
 			
 			return login(true, accessToken, "Login success", user);
@@ -63,8 +64,12 @@ public class SecurityServiceImpl implements SecuityService{
 	 * @return
 	 */
 	public boolean isMatchPassword(String password, String passwordEncrypt, String salt){
-		ShaPasswordEncoder encoder = new ShaPasswordEncoder();
-		return encoder.isPasswordValid(passwordEncrypt, password, salt);
+		
+		ShaPasswordEncoder encoder = new ShaPasswordEncoder(256);
+		String hash = encoder.encodePassword(password, salt);
+		
+		//return encoder.isPasswordValid(passwordEncrypt, password, salt);
+		return hash.equals(passwordEncrypt);
 	}
 	
 	public Map<String, Object> login(boolean result, String token, String message, User user){

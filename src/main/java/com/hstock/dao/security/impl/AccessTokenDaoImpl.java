@@ -12,7 +12,10 @@ public class AccessTokenDaoImpl extends AbstractGenericDao<AccessToken> implemen
 	@Transactional
 	public void addAccessToken(AccessToken accessToken) {
 		
-		delete(accessToken.getAccessToken());
+		if(findById(accessToken.getAccessToken()) != null){
+			delete(accessToken.getAccessToken());
+		}
+		
 		save(accessToken);
 	}
 

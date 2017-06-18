@@ -89,5 +89,5 @@
 	
 	<beans:bean id="userDao" class="com.hstock.dao.security.impl.UserDaoImpl"></beans:bean>
 	<beans:bean id="accessTokenDao" class="com.hstock.dao.security.impl.AccessTokenDaoImpl"></beans:bean>
-	<beans:bean id="securityService" class="com.hstock.service.security.SecurityServiceImpl"></beans:bean>
+	<beans:bean id="securityService" class="com.hstock.service.security.impl.SecurityServiceImpl"></beans:bean>
 </beans:beans>
