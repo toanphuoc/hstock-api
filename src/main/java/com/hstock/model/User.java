@@ -32,6 +32,9 @@ public class User {
 	
 	@Column(name = "LAST_LOGIN")
 	private String lastLogin;
+	
+	@Column(name = "SALT")
+	private String salt;
 
 	public int getUserId() {
 		return userId;
@@ -71,5 +74,13 @@ public class User {
 
 	public void setLastLogin(String lastLogin) {
 		this.lastLogin = lastLogin;
+	}
+
+	public String getSalt() {
+		return salt;
+	}
+
+	public void setSalt(String salt) {
+		this.salt = salt;
 	}
 }

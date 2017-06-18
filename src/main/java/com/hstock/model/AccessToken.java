@@ -19,12 +19,21 @@ public class AccessToken {
 	private String accessToken;
 	
 	@Column(name = "ACTIVE_TIME")
-	private Date activeTime;
+	private Date activeTime = new Date();
 	
 	@OneToOne
 	@JoinColumn(name="USER_ID", foreignKey=@ForeignKey(name="TOKEN_USER_FK"))
 	private User user;
 
+	public AccessToken(){
+		
+	}
+	
+	public AccessToken(String accessToken, User user){
+		this.accessToken = accessToken;
+		this.user = user;
+	}
+	
 	public String getAccessToken() {
 		return accessToken;
 	}
