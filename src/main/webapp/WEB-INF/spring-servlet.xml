@@ -40,6 +40,9 @@
 				<beans:value>com.hstock.model.indicator.IndicatorMACD</beans:value>
 				<beans:value>com.hstock.model.indicator.IndicatorStochRSI</beans:value>
 				<beans:value>com.hstock.model.indicator.IndicatorBB</beans:value>
+				<beans:value>com.hstock.model.UserRole</beans:value>
+				<beans:value>com.hstock.model.User</beans:value>
+				<beans:value>com.hstock.model.AccessToken</beans:value>
 			</beans:list>
 		</beans:property>
 		<beans:property name="hibernateProperties">
@@ -83,4 +86,6 @@
 	<beans:bean id="stochRSIService" class="com.hstock.service.indicator.impl.StochRSIServiceImpl"></beans:bean>
 	
 	<beans:bean id="bbService" class="com.hstock.service.indicator.impl.BBServiceImpl"></beans:bean>
+	
+	<beans:bean id="securityService" class="com.hstock.service.security.SecurityServiceImpl"></beans:bean>
 </beans:beans>
