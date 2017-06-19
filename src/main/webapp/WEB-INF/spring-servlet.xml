@@ -40,6 +40,9 @@
 				<beans:value>com.hstock.model.indicator.IndicatorMACD</beans:value>
 				<beans:value>com.hstock.model.indicator.IndicatorStochRSI</beans:value>
 				<beans:value>com.hstock.model.indicator.IndicatorBB</beans:value>
+				<beans:value>com.hstock.model.UserRole</beans:value>
+				<beans:value>com.hstock.model.User</beans:value>
+				<beans:value>com.hstock.model.AccessToken</beans:value>
 			</beans:list>
 		</beans:property>
 		<beans:property name="hibernateProperties">
@@ -84,4 +87,8 @@
 	
 	<beans:bean id="bbDao" class="com.hstock.dao.indicator.impl.BBDaoImpl"></beans:bean>
 	<beans:bean id="bbService" class="com.hstock.service.indicator.impl.BBServiceImpl"></beans:bean>
+	
+	<beans:bean id="userDao" class="com.hstock.dao.security.impl.UserDaoImpl"></beans:bean>
+	<beans:bean id="accessTokenDao" class="com.hstock.dao.security.impl.AccessTokenDaoImpl"></beans:bean>
+	<beans:bean id="securityService" class="com.hstock.service.security.impl.SecurityServiceImpl"></beans:bean>
 </beans:beans>
