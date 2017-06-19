@@ -36,7 +36,9 @@ public class BBServiceImpl implements BBService{
 			IndicatorBB indicatorBB = bbDao.getIndicatorBBAtOneDate(ticket, period, standardInviation, _type, date);
 			if(indicatorBB != null)
 				return indicatorBB;
-			return BB(stocks, ticket, period, standardInviation, _type, false).get(0);
+			
+			List<IndicatorBB> bbs = BB(stocks, ticket, period, standardInviation, _type, false);
+			return bbs.get(bbs.size() - 1);
 		}
 		
 		return BB(stocks, ticket, period, standardInviation, _type, true);

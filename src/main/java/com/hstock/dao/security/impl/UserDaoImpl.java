@@ -20,4 +20,11 @@ public class UserDaoImpl extends AbstractGenericDao<User> implements UserDao{
 		return null;
 	}
 
+	@Override
+	@Transactional
+	public void updateLastLogin(int id) {
+		String hql = "UPDATE User set LAST_LOGIN = now() where UserID = :id";
+		getSession().createQuery(hql).setParameter("id", id).executeUpdate();
+	}
+
 }

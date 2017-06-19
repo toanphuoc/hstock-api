@@ -11,4 +11,10 @@ public interface UserDao extends GenericDao<User>{
 	 * @return
 	 */
 	public User getUserByUserName(String userName);
+	
+	/**
+	 * Update last login
+	 * @param id
+	 */
+	public void updateLastLogin(int id);
 }

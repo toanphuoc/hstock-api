@@ -45,8 +45,12 @@ public class SecurityServiceImpl implements SecuityService{
 			ShaPasswordEncoder encoder = new ShaPasswordEncoder(256);
 			accessToken = encoder.encodePassword(user.getUserName(), RandomStringUtils.random(8));
 			
+			//Add access  token
 			AccessToken token = new AccessToken(accessToken, user);
 			accessTokenDao.addAccessToken(token);
+			
+			//Update last login
+			userDao.updateLastLogin(user.getUserId());
 			
 			return login(true, accessToken, "Login success", user);
 		}
@@ -66,7 +70,7 @@ public class SecurityServiceImpl implements SecuityService{
 		
 		ShaPasswordEncoder encoder = new ShaPasswordEncoder(256);
 		String hash = encoder.encodePassword(password, salt);
-		
+		System.out.println(hash);
 		//return encoder.isPasswordValid(passwordEncrypt, password, salt);
 		return hash.equals(passwordEncrypt);
 	}
