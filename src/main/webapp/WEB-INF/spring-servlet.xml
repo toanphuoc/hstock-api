@@ -82,5 +82,6 @@
 	<beans:bean id="stochRSIDao" class="com.hstock.dao.indicator.impl.StochRSIDaoImpl"></beans:bean>
 	<beans:bean id="stochRSIService" class="com.hstock.service.indicator.impl.StochRSIServiceImpl"></beans:bean>
 	
+	<beans:bean id="bbDao" class="com.hstock.dao.indicator.impl.BBDaoImpl"></beans:bean>
 	<beans:bean id="bbService" class="com.hstock.service.indicator.impl.BBServiceImpl"></beans:bean>
 </beans:beans>

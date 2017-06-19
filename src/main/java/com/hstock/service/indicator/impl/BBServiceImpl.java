@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.hstock.dao.indicator.BBDao;
 import com.hstock.dao.period.PeriodDao;
 import com.hstock.dao.stock.StockDao;
 import com.hstock.model.Period;
@@ -22,6 +23,9 @@ public class BBServiceImpl implements BBService{
 	
 	@Autowired
 	private PeriodDao periodDao;
+	
+	@Autowired
+	private BBDao bbDao;
 	
 	@Override
 	@Transactional
@@ -69,7 +73,8 @@ public class BBServiceImpl implements BBService{
 			
 			if(periodObj != null){
 				indicatorBB.setPeriod(periodObj);
-				
+				int id = (int) bbDao.save(indicatorBB);
+				indicatorBB.setId(id);
 			}
 			
 			indicatorBBs.add(indicatorBB);
