@@ -2,10 +2,8 @@ package com.hstock.service.indicator.impl;
 
 import java.util.ArrayList;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-
 import com.hstock.dao.indicator.BBDao;
 import com.hstock.dao.period.PeriodDao;
 import com.hstock.dao.stock.StockDao;
@@ -32,15 +30,35 @@ public class BBServiceImpl implements BBService{
 	public Object BB(String ticket, String date, int period, int standardInviation, String type) {
 		Type _type = Type.valueOf(type.toUpperCase());
 		int numberOfDay = _type.name().toUpperCase().equals(Type.WEEKLY.toString()) ? NumberOfDay.FRIDAY : -1;
-		if(date != null){
-			
-		}
 		List<Stock> stocks = stockDao.getAllStock(ticket, numberOfDay);
-		return BB(stocks, period, standardInviation, _type);
+		
+		if(date != null){
+			IndicatorBB indicatorBB = bbDao.getIndicatorBBAtOneDate(ticket, period, standardInviation, _type, date);
+			if(indicatorBB != null)
+				return indicatorBB;
+			return BB(stocks, ticket, period, standardInviation, _type, false).get(0);
+		}
+		
+		return BB(stocks, ticket, period, standardInviation, _type, true);
 	}
 	
-	public Object BB(List<Stock> stocks, int period, int standartInviation, Type type){
-		List<IndicatorBB> indicatorBBs = new ArrayList<IndicatorBB>();
+	/**
+	 * Calculation BB
+	 * @param stocks
+	 * @param ticket
+	 * @param period
+	 * @param standartInviation
+	 * @param type
+	 * @return
+	 */
+	public List<IndicatorBB> BB(List<Stock> stocks, String ticket, int period, int standartInviation, Type type, boolean isSave){
+		List<IndicatorBB> indicatorBBs = bbDao.getListIndicatorBB(ticket, period, standartInviation, type);
+		
+		if(indicatorBBs.size() == (stocks.size() - period + 1)){
+			return indicatorBBs;
+		}
+		
+		indicatorBBs = new ArrayList<IndicatorBB>();
 		
 		Period periodObj = periodDao.getPeriodByValue(period);
 		
@@ -71,7 +89,7 @@ public class BBServiceImpl implements BBService{
 			indicatorBB.setLowerBand(lowerBand);
 			indicatorBB.setBb(upperBand - lowerBand);
 			
-			if(periodObj != null){
+			if(periodObj != null && isSave){
 				indicatorBB.setPeriod(periodObj);
 				int id = (int) bbDao.save(indicatorBB);
 				indicatorBB.setId(id);
