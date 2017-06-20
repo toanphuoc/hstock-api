@@ -7,6 +7,8 @@ import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
 import com.hstock.dao.security.AccessTokenDao;
 import com.hstock.dao.security.UserDao;
@@ -105,6 +107,12 @@ public class SecurityServiceImpl implements SecuityService{
 			}
 		}
 		return false;
+	}
+
+	@Override
+	@Transactional
+	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+		return userDao.getUserByUserName(username);
 	}
 
 }
