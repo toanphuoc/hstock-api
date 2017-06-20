@@ -1,0 +1,2 @@
+load data local infile 'D:/Database AMI/DB June20 2017/All 400 P4End.csv' into table stock 
+fields terminated by ',' enclosed by '"' lines terminated by '\n' ignore 1 lines (ticket, open_date, open_price, high_price, low_price, close_price, volumne);

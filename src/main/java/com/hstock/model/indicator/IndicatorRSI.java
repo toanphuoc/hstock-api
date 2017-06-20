@@ -31,11 +31,11 @@ public class IndicatorRSI {
 	private Type type;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="PERIOD_ID", foreignKey=@ForeignKey(name="EMA_PERIOD_FK"))
+	@JoinColumn(name="PERIOD_ID", foreignKey=@ForeignKey(name="RSI_PERIOD_FK"))
 	private Period period;
 	
 	@ManyToOne(fetch=FetchType.EAGER)
-	@JoinColumn(name="STOCK_ID", nullable=false, foreignKey=@ForeignKey(name="EMA_STOCK_FK"))
+	@JoinColumn(name="STOCK_ID", nullable=false, foreignKey=@ForeignKey(name="RSI_STOCK_FK"))
 	private Stock stock;
 
 	@Column(name="AVG_GAIN")
