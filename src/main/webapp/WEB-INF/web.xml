@@ -34,4 +34,14 @@
         <filter-name>springSecurityFilterChain</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping> 
+    
+     <filter>
+        <filter-name>hstockFilter</filter-name>
+        <filter-class>com.hstock.filter.HStockFilter</filter-class>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>hstockFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 </web-app>
