@@ -13,6 +13,7 @@ import com.hstock.service.indicator.MACDService;
 import com.hstock.service.indicator.RSIService;
 import com.hstock.service.indicator.SMAService;
 import com.hstock.service.indicator.StochRSIService;
+import com.hstock.service.security.SecuityService;
 
 @Controller
 @RequestMapping(value = "/indicator")
@@ -34,6 +35,9 @@ public class IndicatorController {
 	private StochRSIService stochRSIService;
 	
 	@Autowired
+	private SecuityService securityService;
+	
+	@Autowired
 	private BBService bbService;
 	
 	@RequestMapping(value = "/sma", method = RequestMethod.GET, headers = "Accept=application/json")
@@ -41,7 +45,11 @@ public class IndicatorController {
 	public Object SMA(@RequestParam(value = "ticket") String ticket, 
 					@RequestParam(value = "date", required = false) String date,
 					@RequestParam(value = "period") int period, 
-					@RequestParam(value = "type", required = false, defaultValue= "daily") String type){
+					@RequestParam(value = "type", required = false, defaultValue= "daily") String type,
+					@RequestParam(value = "access_token") String accessToken){
+		if(!securityService.checkAccessToken(accessToken)){
+			return "Access token is invalid";
+		}
 		return smaService.SMA(ticket, date, period, type);
 	}
 	
@@ -50,7 +58,11 @@ public class IndicatorController {
 	public Object EMA(@RequestParam(value = "ticket") String ticket, 
 					@RequestParam(value = "date", required = false) String date,
 					@RequestParam(value = "period") int period, 
-					@RequestParam(value = "type", required = false, defaultValue= "daily") String type){
+					@RequestParam(value = "type", required = false, defaultValue= "daily") String type,
+					@RequestParam(value = "access_token") String accessToken){
+		if(!securityService.checkAccessToken(accessToken)){
+			return "Access token is invalid";
+		}
 		return emaService.EMA(ticket, date, period, type);
 	}
 	
@@ -59,7 +71,11 @@ public class IndicatorController {
 	public Object RSI(@RequestParam(value = "ticket") String ticket, 
 					@RequestParam(value = "date", required = false) String date,
 					@RequestParam(value = "period") int period, 
-					@RequestParam(value = "type", required = false, defaultValue= "daily") String type){
+					@RequestParam(value = "type", required = false, defaultValue= "daily") String type,
+					@RequestParam(value = "access_token") String accessToken){
+		if(!securityService.checkAccessToken(accessToken)){
+			return "Access token is invalid";
+		}
 		return rsiService.RSI(ticket, date, period, type);
 	}
 	
@@ -70,7 +86,11 @@ public class IndicatorController {
 					@RequestParam(value = "periodX", defaultValue="12") int periodX, 
 					@RequestParam(value = "periodY", defaultValue="26") int periodY, 
 					@RequestParam(value = "type", required = false, defaultValue= "daily") String type,
-					@RequestParam(value = "periodSignal", defaultValue = "9") int periodSignal){
+					@RequestParam(value = "periodSignal", defaultValue = "9") int periodSignal,
+					@RequestParam(value = "access_token") String accessToken){
+		if(!securityService.checkAccessToken(accessToken)){
+			return "Access token is invalid";
+		}
 		return macdService.MACD(ticket, date, periodX, periodY, periodSignal, type);
 	}
 	
@@ -82,7 +102,11 @@ public class IndicatorController {
 				@RequestParam(value = "period_rsi", defaultValue="14") int periodRsi, 
 				@RequestParam(value = "period_stoch_rsi", defaultValue="14") int periodStochRsi, 
 				@RequestParam(value = "period_sk", required = false, defaultValue="0") int periodSk, 
-				@RequestParam(value = "period_sd", required = false, defaultValue="0") int periodSd){
+				@RequestParam(value = "period_sd", required = false, defaultValue="0") int periodSd,
+				@RequestParam(value = "access_token") String accessToken){
+		if(!securityService.checkAccessToken(accessToken)){
+			return "Access token is invalid";
+		}
 		return stochRSIService.StochRSI(ticket, date, periodRsi, periodStochRsi, periodSk, periodSd, type);
 	}
 	
@@ -92,7 +116,20 @@ public class IndicatorController {
 			@RequestParam(value = "date", required = false) String date, 
 			@RequestParam(value = "type", required = false, defaultValue= "daily") String type, 
 			@RequestParam(value = "period")int period, 
-			@RequestParam(value = "standardDeviation") int standardDeviation){
+			@RequestParam(value = "standardDeviation") int standardDeviation,
+			@RequestParam(value = "access_token") String accessToken){
+		if(!securityService.checkAccessToken(accessToken)){
+			return "Access token is invalid";
+		}
 		return bbService.BB(ticket, date, period, standardDeviation, type);
+	}
+	
+	@RequestMapping(value = "/test", method = RequestMethod.GET, headers = "Accept=application/json")
+	@ResponseBody
+	public String test(@RequestParam(value = "access_token") String accessToken){
+		if(!securityService.checkAccessToken(accessToken)){
+			return "Access token is invalid";
+		}
+		return "Test";
 	}
 }

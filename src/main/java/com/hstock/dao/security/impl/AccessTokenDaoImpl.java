@@ -22,7 +22,7 @@ public class AccessTokenDaoImpl extends AbstractGenericDao<AccessToken> implemen
 	@Override
 	@Transactional
 	public boolean updateActiveTime(String accessToken) {
-		String hql = "UPDATE Access_Token set ACTIVE_TIME = now() where ACCESS_TOKEN = :accessToken";
-		return getSession().createQuery(hql).executeUpdate() == 1;
+		String hql = "UPDATE access_token set ACTIVE_TIME = now() where ACCESS_TOKEN = :accessToken";
+		return getSession().createSQLQuery(hql).addEntity(AccessToken.class).setParameter("accessToken", accessToken).executeUpdate() == 1;
 	}
 }

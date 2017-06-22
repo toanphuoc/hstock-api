@@ -1,15 +1,22 @@
 package com.hstock.service.security.impl;
 
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collection;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
 import org.apache.commons.lang.ArrayUtils;
 import org.apache.commons.lang.RandomStringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.encoding.ShaPasswordEncoder;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.transaction.annotation.Transactional;
+
 import com.hstock.dao.security.AccessTokenDao;
 import com.hstock.dao.security.UserDao;
 import com.hstock.dao.security.UserRole;
@@ -31,6 +38,9 @@ public class SecurityServiceImpl implements SecuityService{
 
 		String accessToken = null;
 		User user = userDao.getUserByUserName(userName);
+		
+		UserDetails userDetails = loadUserByUsername(userName);
+		
 		
 		//Check user name
 		if(user == null){
@@ -112,7 +122,17 @@ public class SecurityServiceImpl implements SecuityService{
 	@Override
 	@Transactional
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		return userDao.getUserByUserName(username);
+		User user = userDao.getUserByUserName(username);
+		System.out.println("User name: " + username);
+		return new org.springframework.security.core.userdetails.User(user.getUserName(), user.getPassword(), 
+                true, true, true, true, getGrantedAuthorities(user));
+	}
+
+	private Collection<? extends GrantedAuthority> getGrantedAuthorities(
+			User user) {
+		List<GrantedAuthority> grantedAuthorities = new ArrayList<GrantedAuthority>();
+		grantedAuthorities.add(new SimpleGrantedAuthority(user.getUserRole().toString()));
+		return grantedAuthorities;
 	}
 
 }
