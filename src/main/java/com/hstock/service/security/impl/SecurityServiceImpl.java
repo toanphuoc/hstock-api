@@ -15,6 +15,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.hstock.dao.security.AccessTokenDao;
@@ -24,6 +25,7 @@ import com.hstock.model.AccessToken;
 import com.hstock.model.User;
 import com.hstock.service.security.SecuityService;
 
+@Service("securityService")
 public class SecurityServiceImpl implements SecuityService{
 
 	@Autowired
@@ -38,9 +40,6 @@ public class SecurityServiceImpl implements SecuityService{
 
 		String accessToken = null;
 		User user = userDao.getUserByUserName(userName);
-		
-		UserDetails userDetails = loadUserByUsername(userName);
-		
 		
 		//Check user name
 		if(user == null){
@@ -122,8 +121,15 @@ public class SecurityServiceImpl implements SecuityService{
 	@Override
 	@Transactional
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		User user = userDao.getUserByUserName(username);
-		System.out.println("User name: " + username);
+		User user = null;
+		try {
+			System.out.println(userDao == null);
+			user = userDao.getUserByUserName(username);
+			System.out.println("User name: " + username);
+			
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
 		return new org.springframework.security.core.userdetails.User(user.getUserName(), user.getPassword(), 
                 true, true, true, true, getGrantedAuthorities(user));
 	}
@@ -131,8 +137,14 @@ public class SecurityServiceImpl implements SecuityService{
 	private Collection<? extends GrantedAuthority> getGrantedAuthorities(
 			User user) {
 		List<GrantedAuthority> grantedAuthorities = new ArrayList<GrantedAuthority>();
-		grantedAuthorities.add(new SimpleGrantedAuthority(user.getUserRole().toString()));
+		grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_" + user.getUserRole().toString()));
 		return grantedAuthorities;
+	}
+
+	@Override
+	@Transactional
+	public User getUserByUsername(String userName) {
+		return userDao.getUserByUserName(userName);
 	}
 
 }

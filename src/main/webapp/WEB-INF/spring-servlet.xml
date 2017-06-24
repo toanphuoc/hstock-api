@@ -8,7 +8,10 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.0.xsd">
 
 	<annotation-driven />
+	<context:annotation-config />
+	<context:component-scan base-package="com.hstock" />
 
+	<tx:annotation-driven transaction-manager="transactionManager" />
 	<resources mapping="/resources/**" location="/resources/" />
 
 	<beans:bean
@@ -54,10 +57,8 @@
 			</beans:props>
 		</beans:property>
 	</beans:bean>
+	
 
-	<context:component-scan base-package="com.hstock" />
-
-	<tx:annotation-driven transaction-manager="transactionManager" />
 
 	<beans:bean id="transactionManager"
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
