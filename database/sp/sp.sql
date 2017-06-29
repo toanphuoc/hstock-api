@@ -202,3 +202,15 @@ BEGIN
     order by str_to_date(open_date, '%m/%d/%Y');
 END$$
 DELIMITER ;
+
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getAllADXOfStock`(in argTicket varchar(45), in argPeriod int, in argType varchar(45))
+BEGIN
+	select i.* from indicator_adx i
+	inner join stock s on s.id = i.STOCK_ID
+	inner join period p on p.id = i.PERIOD_ID
+	where type = argType and s.ticket = upper(argTicket) and p.VALUE = argPeriod 
+    order by str_to_date(s.open_date, '%m/%d/%Y') ;
+END$$
+DELIMITER ;
+

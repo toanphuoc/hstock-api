@@ -1,9 +1,7 @@
 package com.hstock.dao.security.impl;
 
 import java.util.List;
-
 import org.springframework.transaction.annotation.Transactional;
-
 import com.hstock.dao.AbstractGenericDao;
 import com.hstock.dao.security.UserDao;
 import com.hstock.model.User;

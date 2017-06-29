@@ -9,5 +9,5 @@ public interface ADXService {
 
 	public Object ADX(String ticket, String date, int period, String type);
 	
-	public Object ADX(List<Stock> stocks, String ticket, int period, Type type);
+	public Object ADX(String ticket, int period, Type type);
 }

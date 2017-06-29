@@ -1,9 +1,7 @@
 package com.hstock.dao.indicator.impl;
 
 import java.util.List;
-
 import org.springframework.transaction.annotation.Transactional;
-
 import com.hstock.dao.AbstractGenericDao;
 import com.hstock.dao.indicator.BBDao;
 import com.hstock.model.Type;

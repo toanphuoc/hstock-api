@@ -13,6 +13,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.hstock.model.Period;
 import com.hstock.model.Stock;
 import com.hstock.model.Type;
@@ -105,6 +106,13 @@ public class IndicatorADX {
 	public void setAdx(double adx) {
 		this.adx = adx;
 	}
-	
-	
+
+	public Stock getStock() {
+		return stock;
+	}
+
+	public void setStock(Stock stock) {
+		this.stock = stock;
+	}
+
 }
