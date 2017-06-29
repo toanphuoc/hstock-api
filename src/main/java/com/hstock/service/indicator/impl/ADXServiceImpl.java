@@ -10,6 +10,7 @@ import com.hstock.dao.stock.StockDao;
 import com.hstock.model.Stock;
 import com.hstock.model.Type;
 import com.hstock.service.indicator.ADXService;
+import com.hstock.service.indicator.NumberOfDay;
 
 @Transactional
 public class ADXServiceImpl implements ADXService {
@@ -22,8 +23,14 @@ public class ADXServiceImpl implements ADXService {
 	
 	@Override
 	public Object ADX(String ticket, String date, int period, String type) {
-		// TODO Auto-generated method stub
-		return null;
+		Type _type = Type.valueOf(type.toUpperCase());
+		int numberOfDay = _type.name().toUpperCase().equals(Type.WEEKLY.toString()) ? NumberOfDay.FRIDAY : -1;
+		List<Stock> stocks = stockDao.getAllStock(ticket, numberOfDay);
+		
+		if(date != null){
+			
+		}
+		return ADX(stocks, ticket, period, _type);
 	}
 
 	@Override
