@@ -123,9 +123,10 @@ public class SecurityServiceImpl implements SecuityService{
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = null;
 		try {
+			System.out.println("User name: " + username);
 			System.out.println(userDao == null);
 			user = userDao.getUserByUserName(username);
-			System.out.println("User name: " + username);
+			
 			
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -137,7 +138,7 @@ public class SecurityServiceImpl implements SecuityService{
 	private Collection<? extends GrantedAuthority> getGrantedAuthorities(
 			User user) {
 		List<GrantedAuthority> grantedAuthorities = new ArrayList<GrantedAuthority>();
-		grantedAuthorities.add(new SimpleGrantedAuthority("ROLE_" + user.getUserRole().toString()));
+		grantedAuthorities.add(new SimpleGrantedAuthority(user.getUserRole().toString()));
 		return grantedAuthorities;
 	}
 

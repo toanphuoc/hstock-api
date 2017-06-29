@@ -43,6 +43,7 @@
 				<beans:value>com.hstock.model.indicator.IndicatorMACD</beans:value>
 				<beans:value>com.hstock.model.indicator.IndicatorStochRSI</beans:value>
 				<beans:value>com.hstock.model.indicator.IndicatorBB</beans:value>
+				<beans:value>com.hstock.model.indicator.IndicatorADX</beans:value>
 				<beans:value>com.hstock.model.UserRole</beans:value>
 				<beans:value>com.hstock.model.User</beans:value>
 				<beans:value>com.hstock.model.AccessToken</beans:value>
@@ -58,8 +59,6 @@
 		</beans:property>
 	</beans:bean>
 	
-
-
 	<beans:bean id="transactionManager"
 		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<beans:property name="sessionFactory"
@@ -88,6 +87,9 @@
 	
 	<beans:bean id="bbDao" class="com.hstock.dao.indicator.impl.BBDaoImpl"></beans:bean>
 	<beans:bean id="bbService" class="com.hstock.service.indicator.impl.BBServiceImpl"></beans:bean>
+	
+	<beans:bean id="adxDao" class="com.hstock.dao.indicator.impl.ADXDaoImpl"></beans:bean>
+	<beans:bean id="adxService" class="com.hstock.service.indicator.impl.ADXServiceImpl"></beans:bean>
 	
 	<beans:bean id="userDao" class="com.hstock.dao.security.impl.UserDaoImpl"></beans:bean>
 	<beans:bean id="accessTokenDao" class="com.hstock.dao.security.impl.AccessTokenDaoImpl"></beans:bean>

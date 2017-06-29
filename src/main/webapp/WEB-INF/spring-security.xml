@@ -9,7 +9,7 @@
     <http auto-config="true" use-expressions="true">
     	<expression-handler ref="expressionHandler"/>
         <intercept-url pattern="/" access="permitAll" />
-        <intercept-url pattern="/indicator**" access="hasRole('USER')" />
+        <!-- <intercept-url pattern="/indicator/**" access="hasRole('USER')" /> -->
         <!-- <intercept-url pattern="/admin**" access="hasRole('ADMIN')" /> -->
         <!-- <form-login  authentication-failure-url="/Access_Denied" /> -->
         <http-basic entry-point-ref="restAuthenticationEntryPoint"/>

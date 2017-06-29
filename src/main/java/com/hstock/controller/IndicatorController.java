@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.hstock.service.indicator.ADXService;
 import com.hstock.service.indicator.BBService;
 import com.hstock.service.indicator.EMAService;
 import com.hstock.service.indicator.MACDService;
@@ -33,6 +34,9 @@ public class IndicatorController {
 	
 	@Autowired
 	private StochRSIService stochRSIService;
+	
+	@Autowired
+	private ADXService adxService;
 	
 	@Autowired
 	private SecuityService securityService;
@@ -122,6 +126,15 @@ public class IndicatorController {
 			return "Access token is invalid";
 		}
 		return bbService.BB(ticket, date, period, standardDeviation, type);
+	}
+	
+	@RequestMapping(value = "/adx", method = RequestMethod.GET, headers = "Accept=application/json")
+	@ResponseBody
+	public Object ADX(@RequestParam(value = "ticket") String ticket,
+			@RequestParam(value = "type", required = false, defaultValue= "daily") String type, 
+			@RequestParam(value = "date", required = false) String date, 
+			@RequestParam(value = "period") int period){
+		return adxService.ADX(ticket, date, period, type);
 	}
 	
 	@RequestMapping(value = "/test", method = RequestMethod.GET, headers = "Accept=application/json")
