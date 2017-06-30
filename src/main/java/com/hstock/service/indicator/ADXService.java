@@ -1,8 +1,5 @@
 package com.hstock.service.indicator;
 
-import java.util.List;
-
-import com.hstock.model.Stock;
 import com.hstock.model.Type;
 
 public interface ADXService {

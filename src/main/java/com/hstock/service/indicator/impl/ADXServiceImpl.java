@@ -3,6 +3,7 @@ package com.hstock.service.indicator.impl;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,18 +32,21 @@ public class ADXServiceImpl implements ADXService {
 	@Override
 	public Object ADX(String ticket, String date, int period, String type) {
 		Type _type = Type.valueOf(type.toUpperCase());
-		int numberOfDay = _type.name().toUpperCase().equals(Type.WEEKLY.toString()) ? NumberOfDay.FRIDAY : -1;
-	
 		if(date != null){
-			
+			return ADX(ticket, period, _type, date);
 		}
 		
 		return ADX(ticket, period, _type);
 	}
 
+	private Object ADX(String ticket, int period, Type type, String date) {
+		IndicatorADX indicatorADX = adxDao.getIndicatorADXAtOneDate(ticket, period, type, date);
+		if(indicatorADX != null) return indicatorADX;
+		return null;
+	}
+
 	@Override
 	public Object ADX(String ticket, int period, Type type) {
-		
 		
 		List<IndicatorADX> indicatorADXs = adxDao.getListIndicatorADX(ticket, period, type);
 		if(!indicatorADXs.isEmpty())

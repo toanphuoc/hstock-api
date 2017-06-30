@@ -1,4 +1,4 @@
-package com.hstock.dao.security;
+package com.hstock.dao.user;
 
 public enum UserRole {
 

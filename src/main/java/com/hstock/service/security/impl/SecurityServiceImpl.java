@@ -19,8 +19,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.hstock.dao.security.AccessTokenDao;
-import com.hstock.dao.security.UserDao;
-import com.hstock.dao.security.UserRole;
+import com.hstock.dao.user.UserDao;
+import com.hstock.dao.user.UserRole;
 import com.hstock.model.AccessToken;
 import com.hstock.model.User;
 import com.hstock.service.security.SecuityService;

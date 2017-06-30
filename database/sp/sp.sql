@@ -214,3 +214,19 @@ BEGIN
 END$$
 DELIMITER ;
 
+DELIMITER $$
+CREATE DEFINER=`root`@`localhost` PROCEDURE `getADXAtOneDay`(in argTicket varchar(45), in argType varchar(45), in argPeriod int, in argOpenDay varchar(45))
+BEGIN
+	SELECT i.* from indicator_adx i 
+    inner join stock s on s.id = i.STOCK_ID 
+    inner join period p on p.id = i.PERIOD_ID 
+    where s.ticket = upper(argTicket) 
+    and p.value = argPeriod 
+    and i.type = argType 
+    and str_to_date(s.open_date, '%m/%d/%Y') <= str_to_date(argOpenDay, '%m/%d/%Y') 
+    and case when argType = 'WEEKLY' then weekday(str_to_date(s.open_date, '%m/%d/%Y')) = 4 else true end 
+    order by str_to_date(s.open_date, '%m/%d/%Y') desc limit 1;
+END$$
+DELIMITER ;
+
+

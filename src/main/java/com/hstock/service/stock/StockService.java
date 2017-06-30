@@ -1,12 +1,9 @@
 package com.hstock.service.stock;
 
+import java.util.List;
+import com.hstock.model.Stock;
+
 public interface StockService {
 	
-	String WEEKLY = "WEEKLY";
-	String DAILY = "DAILY";
-	int NUMBER_OF_FRIDAY = 4;
-	
-	public Object EMA(String ticket, String date, int period, String type);
-	
-	public Object RSI(String ticket, int period);
+	public List<Stock> getFavoriteStock(String accessToken);
 }
