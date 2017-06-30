@@ -133,7 +133,11 @@ public class IndicatorController {
 	public Object ADX(@RequestParam(value = "ticket") String ticket,
 			@RequestParam(value = "type", required = false, defaultValue= "daily") String type, 
 			@RequestParam(value = "date", required = false) String date, 
-			@RequestParam(value = "period") int period){
+			@RequestParam(value = "period") int period, 
+			@RequestParam(value = "access_token") String accessToken){
+		if(!securityService.checkAccessToken(accessToken)){
+			return "Access token is invalid";
+		}
 		return adxService.ADX(ticket, date, period, type);
 	}
 	

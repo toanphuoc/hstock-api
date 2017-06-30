@@ -29,4 +29,13 @@ public class SecurityController {
 		String ip = requestContext.getRemoteAddr().toString();
 		return securityService.login(ip, userName, password);
 	}
+	
+	@RequestMapping(value = "/logout", method = RequestMethod.DELETE, headers = "Accept=application/json")
+	@ResponseBody
+	public void logout(@RequestParam(value = "access_token") String accessToken){
+		if(!securityService.checkAccessToken(accessToken)){
+			return;
+		}
+		securityService.removeAccessToken(accessToken);
+	}
 }

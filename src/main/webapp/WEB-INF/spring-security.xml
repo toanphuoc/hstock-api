@@ -31,7 +31,7 @@
             </user-service>
         </authentication-provider>
     </authentication-manager> -->
-    <beans:bean id="userDao" class="com.hstock.dao.security.impl.UserDaoImpl"></beans:bean>
+    <beans:bean id="userDao" class="com.hstock.dao.user.impl.UserDaoImpl"></beans:bean>
 	<beans:bean id="securityService" class="com.hstock.service.security.impl.SecurityServiceImpl"></beans:bean>
 	<beans:bean id="expressionHandler" class="com.hstock.security.CustomWebSecurityExpressionHandler"></beans:bean>
 	<beans:bean id="restAuthenticationEntryPoint" class="com.hstock.security.RestAuthenticationEntryPoint"></beans:bean>

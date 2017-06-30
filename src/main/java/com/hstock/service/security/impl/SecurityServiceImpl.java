@@ -26,6 +26,7 @@ import com.hstock.model.User;
 import com.hstock.service.security.SecuityService;
 
 @Service("securityService")
+@Transactional
 public class SecurityServiceImpl implements SecuityService{
 
 	@Autowired
@@ -35,7 +36,6 @@ public class SecurityServiceImpl implements SecuityService{
 	private AccessTokenDao accessTokenDao;
 	
 	@Override
-	@Transactional
 	public Map<String, Object> login(String ip, String userName, String password) {
 
 		String accessToken = null;
@@ -100,7 +100,6 @@ public class SecurityServiceImpl implements SecuityService{
 	}
 
 	@Override
-	@Transactional
 	public boolean checkAccessToken(String token) {
 		AccessToken accessToken = accessTokenDao.findById(token);
 		if(accessToken != null){
@@ -119,7 +118,6 @@ public class SecurityServiceImpl implements SecuityService{
 	}
 
 	@Override
-	@Transactional
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		User user = null;
 		try {
@@ -143,9 +141,13 @@ public class SecurityServiceImpl implements SecuityService{
 	}
 
 	@Override
-	@Transactional
 	public User getUserByUsername(String userName) {
 		return userDao.getUserByUserName(userName);
+	}
+
+	@Override
+	public void removeAccessToken(String accessToken) {
+		accessTokenDao.delete(accessToken);
 	}
 
 }

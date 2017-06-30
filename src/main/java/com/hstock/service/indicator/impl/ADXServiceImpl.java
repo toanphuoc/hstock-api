@@ -39,14 +39,20 @@ public class ADXServiceImpl implements ADXService {
 		return ADX(ticket, period, _type);
 	}
 
-	private Object ADX(String ticket, int period, Type type, String date) {
+	private IndicatorADX ADX(String ticket, int period, Type type, String date) {
 		IndicatorADX indicatorADX = adxDao.getIndicatorADXAtOneDate(ticket, period, type, date);
 		if(indicatorADX != null) return indicatorADX;
-		return null;
+		
+		int numberOfDay = type.name().toUpperCase().equals(Type.WEEKLY.toString()) ? NumberOfDay.FRIDAY : -1;
+		
+		List<Stock> stocks = stockDao.getAllStockToDate(ticket, date, numberOfDay);
+		
+		List<IndicatorADX> indicatorADXs = this.ADX(stocks, ticket, period, type, false);
+		return indicatorADXs.get(indicatorADXs.size() - 1);
 	}
-
+	
 	@Override
-	public Object ADX(String ticket, int period, Type type) {
+	public List<IndicatorADX> ADX(String ticket, int period, Type type) {
 		
 		List<IndicatorADX> indicatorADXs = adxDao.getListIndicatorADX(ticket, period, type);
 		if(!indicatorADXs.isEmpty())
@@ -56,6 +62,12 @@ public class ADXServiceImpl implements ADXService {
 		int numberOfDay = type.name().toUpperCase().equals(Type.WEEKLY.toString()) ? NumberOfDay.FRIDAY : -1;
 		List<Stock> stocks = stockDao.getAllStock(ticket, numberOfDay);
 		
+		return this.ADX(stocks, ticket, period, type, true);
+	}
+	
+	private List<IndicatorADX> ADX(List<Stock> stocks, String ticket, int period, Type type, boolean isSave){
+		
+		List<IndicatorADX> indicatorADXs = new ArrayList<>();
 		Period periodObn = periodDao.getPeriodByValue(period);
 		
 		double preSumTr = 0.0;
@@ -141,6 +153,10 @@ public class ADXServiceImpl implements ADXService {
 			}
 			if(periodObn != null){
 				indicatorADX.setPeriod(periodObn);
+				
+			}
+			
+			if(isSave){
 				int id = (int) adxDao.save(indicatorADX);
 				indicatorADX.setId(id);
 			}
@@ -149,5 +165,7 @@ public class ADXServiceImpl implements ADXService {
 		}
 		return indicatorADXs;
 	}
+
+
 
 }

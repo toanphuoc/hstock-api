@@ -5,5 +5,10 @@ import com.hstock.model.Stock;
 
 public interface StockService {
 	
-	public List<Stock> getFavoriteStock(String accessToken);
+	/**
+	 * Get list of favorite stock by access token
+	 * @param accessToken
+	 * @return
+	 */
+	public List<String> getFavoriteStock(String accessToken);
 }

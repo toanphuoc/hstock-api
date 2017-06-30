@@ -8,6 +8,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 @Entity
@@ -22,9 +23,9 @@ public class StockFavorite {
 	@Column(name="TICKET", nullable = false)
 	private String ticket;
 	
-	@ManyToMany
-	@JoinColumn(name="STOCK_ID", foreignKey=@ForeignKey(name="STOCK_FAVORITE_STOCK_FK"))
-	private Stock stock;
+	@ManyToOne
+	@JoinColumn(name="USER_ID", foreignKey=@ForeignKey(name="STOCK_FAVORITE_USER_FK"))
+	private User user;
 
 	public Long getId() {
 		return id;
@@ -34,11 +35,20 @@ public class StockFavorite {
 		this.id = id;
 	}
 
-	public Stock getStock() {
-		return stock;
+	public String getTicket() {
+		return ticket;
 	}
 
-	public void setStock(Stock stock) {
-		this.stock = stock;
+	public void setTicket(String ticket) {
+		this.ticket = ticket;
 	}
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
 }

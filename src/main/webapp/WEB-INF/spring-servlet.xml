@@ -92,6 +92,8 @@
 	<beans:bean id="adxDao" class="com.hstock.dao.indicator.impl.ADXDaoImpl"></beans:bean>
 	<beans:bean id="adxService" class="com.hstock.service.indicator.impl.ADXServiceImpl"></beans:bean>
 	
+	<beans:bean id="favoriteStockDao" class="com.hstock.dao.favoriteStock.impl.FavoriteStockDaoImpl"></beans:bean>
+	
 	<beans:bean id="userDao" class="com.hstock.dao.user.impl.UserDaoImpl"></beans:bean>
 	<beans:bean id="accessTokenDao" class="com.hstock.dao.security.impl.AccessTokenDaoImpl"></beans:bean>
 	<beans:bean id="securityService" class="com.hstock.service.security.impl.SecurityServiceImpl"></beans:bean>
